@@ -25,6 +25,10 @@ public class Car {
         return convertible;
     }
 
+    public void setMake(String make) {
+        this.make = make;
+    }
+
     public void describeCar() {
         System.out.println(doors + "-Door " +
                 color + " " +
