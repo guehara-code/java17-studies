@@ -3,5 +3,8 @@ public class Main {
 
         Car car = new Car();
         car.describeCar();
+
+        System.out.println("make: " + car.getMake());
+        System.out.println("model: " + car.getModel());
     }
 }
