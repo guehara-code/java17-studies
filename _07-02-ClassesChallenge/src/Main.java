@@ -1,6 +1,7 @@
 public class Main {
     public static void main(String[] args) {
-        Account bobsAccount = new Account("12345", 1000.00,  "Bob Brown", "mymail@bob.com", "(087) 123-4567");
+        Account bobsAccount = new Account();
+//        Account bobsAccount = new Account("12345", 1000.00,  "Bob Brown", "mymail@bob.com", "(087) 123-4567");
 //        bobsAccount.setNumber("12345");
 //        bobsAccount.setCustomerEmail("Bob Brown");
 //        bobsAccount.setCustomerEmail("mymail@bob.com");
@@ -14,6 +15,9 @@ public class Main {
         bobsAccount.depositFunds(100);
         bobsAccount.withdrawFunds(45.55);
         bobsAccount.withdrawFunds(54.46);
+
+        Account timsAccount = new Account("Tim", "tim@email.com", "12345");
+        System.out.println("AccountNo: " + timsAccount.getNumber() + "; name " + timsAccount.getCustomerName());
 
     }
 }
