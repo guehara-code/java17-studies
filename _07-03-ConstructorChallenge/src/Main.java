@@ -10,5 +10,10 @@ public class Main {
         System.out.println(secondCustomer.getName());
         System.out.println(secondCustomer.getCreditLimit());
         System.out.println(secondCustomer.getEmail());
+
+        Customer thirdCustomer = new Customer("Joe", "joe@email.com");
+        System.out.println(thirdCustomer.getName());
+        System.out.println(thirdCustomer.getCreditLimit());
+        System.out.println(thirdCustomer.getEmail());
     }
 }
