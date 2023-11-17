@@ -10,6 +10,9 @@ public class Main {
         doAnimalStuff(yorkie, "fast");
         Dog retriever = new Dog("Labrador Retriever", 65, "Floppy", "Swimmer");
         doAnimalStuff(retriever, "slow");
+
+        Dog wolf = new Dog("Wolf", 40);
+        doAnimalStuff(wolf, "slow");
     }
 
     public  static void doAnimalStuff(Animal animal, String speed) {
