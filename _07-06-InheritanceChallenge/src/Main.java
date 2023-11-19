@@ -10,5 +10,8 @@ public class Main {
         System.out.println(john);
         System.out.println("Age: " + john.getAge());
         System.out.println("Joe's Paycheck = $ " + john.collectPay());
+
+        john.retire();
+        System.out.println("Joe's Pension check = $" + john.collectPay());
     }
 }
