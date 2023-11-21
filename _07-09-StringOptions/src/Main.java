@@ -29,12 +29,14 @@ public class Main {
 
         builderPlus.reverse().setLength(7);
         System.out.println(builderPlus);
+
     }
 
     public static void printInformation(String string) {
         System.out.println("String = " + string);
         System.out.println("length = " + string.length());
     }
+
 
     public static void printInformation(StringBuilder builder) {
         System.out.println("StringBuilder = " + builder);
