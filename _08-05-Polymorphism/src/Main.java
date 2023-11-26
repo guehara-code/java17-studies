@@ -5,6 +5,5 @@ public class Main {
         Movie theMovie = Movie.getMovie("" +
                 "Science", "Star Wars");
         theMovie.watchMovie();
-
     }
 }
