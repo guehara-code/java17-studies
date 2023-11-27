@@ -1,3 +1,4 @@
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Main {
@@ -19,6 +20,9 @@ public class Main {
             String title = s.nextLine();
             Movie movie = Movie.getMovie(type, title);
             movie.watchMovie();
+
+
+
         }
     }
 }
