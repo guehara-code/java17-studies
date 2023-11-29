@@ -44,3 +44,61 @@ class GasPoweredCar extends Car {
         System.out.printf("Gas -> usage exceeds the average: %.2f %n", avgKMPerLiter);
     }
 }
+
+
+class ElectricCar extends Car {
+    private double avgKMPerCharge;
+    private int batterySize = 6;
+
+    public ElectricCar(String description) {
+        super(description);
+    }
+
+    public ElectricCar(String description, double avgPerLiter, int cylinders) {
+        super(description);
+        this.avgKMPerCharge = avgPerLiter;
+        this.batterySize = cylinders;
+    }
+
+    @Override
+    public void startEngine() {
+        System.out.printf("BEV -> switch %d kWh battery on, Ready!%n", batterySize);
+
+    }
+
+    @Override
+    protected void runEngine() {
+        System.out.printf("BEV -> usage under the average: %.2f %n", avgKMPerCharge);
+    }
+}
+
+
+class HybridCar extends Car {
+    private double avgKMPerLiter;
+    private int cylinders = 6;
+    private int batterySize;
+
+    public HybridCar(String description) {
+        super(description);
+    }
+
+    public HybridCar(String description, double avgPerLiter, int cylinders, int batterySize) {
+        super(description);
+        this.avgKMPerLiter = avgPerLiter;
+        this.cylinders = cylinders;
+        this.batterySize = batterySize;
+    }
+
+    @Override
+    public void startEngine() {
+        System.out.printf("Hybrid -> %d cylinders are fired up.%n", cylinders);
+        System.out.printf("Hybrid -> switch %d kWh battery on, Ready!%n", batterySize);
+
+    }
+
+    @Override
+    protected void runEngine() {
+        System.out.printf("Hybrid -> usage below average: %.2f %n", avgKMPerLiter);
+    }
+}
+
