@@ -24,5 +24,13 @@ public class Main {
         secondMeal.addBurgerToppings("LETTUCE", "CHEESE", "MAYO");
         secondMeal.setDrinkSize("SMALL");
         secondMeal.printItemizedList();
+
+        System.out.println(" ");
+
+        MealOrder deluxeMeal = new MealOrder("deluxe", "7-up", "chili");
+        deluxeMeal.addBurgerToppings("AVOCADO", "BACON", "LETTUCE", "CHEESE", "MAYO");
+        deluxeMeal.setDrinkSize("SMALL");
+        deluxeMeal.printItemizedList();
+
     }
 }
