@@ -9,8 +9,11 @@ public class Main {
 //        Item avocado = new Item("Topping", "avocado", 1.5);
 //        avocado.printItem();
 
-        Burger burger = new Burger("regular", 4.00);
-        burger.addToppings("BACON", "CHEESE", "MAYO");
-        burger.printItem();
+//        Burger burger = new Burger("regular", 4.00);
+//        burger.addToppings("BACON", "CHEESE", "MAYO");
+//        burger.printItem();
+
+        MealOrder regularMeal = new MealOrder();
+        regularMeal.printItemizedList();
     }
 }
