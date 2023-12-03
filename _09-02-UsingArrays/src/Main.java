@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -29,6 +30,13 @@ public class Main {
 
         int[] largerArray = Arrays.copyOf(thirdArray, 15);
         System.out.println(Arrays.toString(largerArray));
+
+        String[] sArray = {"Able", "Jane", "Mark", "Ralph", "David"};
+        Arrays.sort(sArray);
+        System.out.println(Arrays.toString(sArray));
+        if (Arrays.binarySearch(sArray, "Mark") >= 0) {
+            System.out.println("Found Mark in the list");
+        }
     }
     private static int[] getRandomArray(int len) {
         Random random = new Random();
