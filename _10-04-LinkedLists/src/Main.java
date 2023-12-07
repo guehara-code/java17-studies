@@ -21,6 +21,9 @@ public class Main {
         gettingElements(placesToVisit);
 
         printItinerary3(placesToVisit);
+
+        System.out.println();
+        testIterator(placesToVisit);
     }
 
     private static void addMoreElements(LinkedList<String> list) {
@@ -65,6 +68,8 @@ public class Main {
 
         String p4 = list.pop(); //removes first element
         System.out.println(p4 + " was removed");
+
+
     }
 
     private static void gettingElements(LinkedList<String> list) {
@@ -124,5 +129,26 @@ public class Main {
         System.out.println("Trip ends at " + list.getLast());
 
     }
+
+    public static void testIterator(LinkedList<String> list) {
+
+        var iterator = list.listIterator();
+        while (iterator.hasNext()) {
+//            System.out.println(iterator.next());
+            if (iterator.next().equals("Brisbane")) {
+                //iterator.remove();
+                iterator.add("Lake Wivenhoe");
+            }
+        }
+        while (iterator.hasPrevious()) {
+            System.out.println(iterator.previous());
+        }
+        System.out.println(list);
+
+        var iterator2 = list.listIterator(3);
+        System.out.println(iterator2.previous());
+
+    }
+
 
 }
