@@ -12,6 +12,23 @@ public class Main {
         System.out.println(autoBoxed.getClass().getName());
 //        System.out.println(autoUnboxed.getClass().getName()); // cannot use getClass on primitive types
 
+        Double resultBoxed = getLiteralDoublePrimitive();
+        double resultUnboxed = getDoubleObject();
+
+
      }
+
+     private static Double getDoubleObject() {
+
+        return Double.valueOf(100.00);
+
+     }
+
+     private static double getLiteralDoublePrimitive() {
+
+        return 100.00;
+
+     }
+
 }
 
