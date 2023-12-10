@@ -20,6 +20,14 @@ public class Main {
         bank.addNewCustomer("Jane A", 500.0);
         System.out.println(bank);
 
+        bank.addTransaction("Jane A", -10.25);
+        bank.addTransaction("jane A", -75.01);
+        bank.printStatement("Jane a");
+
+        bank.addNewCustomer("bob s", 25);
+        bank.addTransaction("Bob S", 100);
+        bank.printStatement("Bob S");
+
     }
 }
 
@@ -76,6 +84,13 @@ class Bank {
             return;
         }
 
+        System.out.println("-".repeat(30));
+        System.out.println("Customer Name: " + customer.name());
+        System.out.println("Transactions:");
+        for (double d : customer.transactions()) { // unboxing
+            System.out.printf("$%10.2f (%s)%n", d, d < 0 ? "debit" : "credit");
+        }
     }
+
 
 }
