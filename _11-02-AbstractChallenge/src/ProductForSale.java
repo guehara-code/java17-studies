@@ -1,4 +1,4 @@
-public class ProductForSale {
+public abstract class ProductForSale {
 
     protected String type;
     protected double price;
@@ -19,5 +19,7 @@ public class ProductForSale {
         System.out.printf("%2d qty at $%8.2f each, %-15s %-35s %n",
                 qty, price, type, description);
     }
+
+    public abstract void showDetails();
 
 }
