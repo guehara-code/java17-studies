@@ -5,7 +5,10 @@ interface FlightEnabled {
     void fly();
 }
 
-interface Trackable {}
+interface Trackable {
+
+    void track();
+}
 
 public abstract class Animal {
 

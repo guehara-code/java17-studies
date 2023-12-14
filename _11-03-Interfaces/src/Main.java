@@ -12,5 +12,19 @@ public class Main {
         animal.move();
 //        flier.move();
 //        tracked.move();
+
+        flier.takeOff();
+        flier.fly();
+        tracked.track();
+        flier.land();
+    }
+
+    private static void inFlight(FlightEnabled flier) {
+        flier.takeOff();
+        flier.fly();
+        if (flier instanceof Trackable tracked) {
+            tracked.track();
+        }
+        flier.land();
     }
 }
