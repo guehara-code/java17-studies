@@ -23,6 +23,10 @@ public class Main {
 
         System.out.println("\ninFlight:");
         inFlight(new Jet());
+
+        System.out.println("\nTruck:");
+        Trackable truck = new Truck();
+        truck.track();
     }
 
     private static void inFlight(FlightEnabled flier) {
