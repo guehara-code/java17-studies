@@ -17,6 +17,12 @@ public class Main {
         flier.fly();
         tracked.track();
         flier.land();
+
+        System.out.println("\ninFlight:");
+        inFlight(flier);
+
+        System.out.println("\ninFlight:");
+        inFlight(new Jet());
     }
 
     private static void inFlight(FlightEnabled flier) {
