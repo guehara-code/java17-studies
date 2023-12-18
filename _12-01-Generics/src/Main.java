@@ -1,8 +1,12 @@
-interface Player{}
+interface Player{
+    String name();
+}
 
 record BaseballPlayer(String name, String position) implements Player {}
 
 record FootballPlayer(String name, String position) implements Player {}
+
+record VolleyballPlayer(String name, String position) implements Player {}
 
 public class Main {
 
@@ -34,6 +38,16 @@ public class Main {
         var rory = new FootballPlayer("Rory Laird", "Midfield");
         afc.addTeamMember(rory);
         afc.listTeamMembers();
+
+        Team<VolleyballPlayer> adelaide = new Team<>("Adelaide Storm");
+        adelaide.addTeamMember(new VolleyballPlayer("N Roberts", "Setter"));
+        adelaide.listTeamMembers();
+
+        var canberra = new Team<VolleyballPlayer>("Canberra Heat");
+        canberra.addTeamMember(new VolleyballPlayer("B Black", "Opposite"));
+        canberra.listTeamMembers();
+        scoreResult(canberra, 0, adelaide, 1);
+
 
     }
 
