@@ -21,7 +21,7 @@ public class Main {
         printList(lpaStudents);
     }
 
-    public static void printList(List students) {
+    public static <T> void printList(List<T> students) {
 
         for (var student : students) {
             System.out.println(student);
