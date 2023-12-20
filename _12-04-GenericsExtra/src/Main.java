@@ -13,20 +13,24 @@ public class Main {
         }
         students.add(new LPAStudent());
 //        printList(students);
-        printMOreLists(students);
+        printMoreLists(students);
 
         List<LPAStudent> lpaStudents = new ArrayList<>();
         for (int i = 0; i < studentCount; i++) {
             lpaStudents.add(new LPAStudent());
         }
 //        printList(lpaStudents);
-        printMOreLists(lpaStudents);
+        printMoreLists(lpaStudents);
 
         testList(new ArrayList<String>(List.of("Able", "Barry", "Charlie")));
         testList(new ArrayList<Integer>(List.of(1, 2, 3)));
+
+        var queryList = new QueryList<>(lpaStudents);
+        var matches = queryList.getMatches("Course", "Python");
+        printMoreLists(matches);
     }
 
-    public static void printMOreLists(List<? extends Student> students) {
+    public static void printMoreLists(List<? extends Student> students) {
 
         for (var student : students) {
             System.out.println(student.getYearStarted() + ": " + student);
