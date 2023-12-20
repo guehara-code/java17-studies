@@ -2,6 +2,14 @@ import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 
+record Employee(String name) implements QueryItem {
+
+    @Override
+    public boolean matchFieldValue(String fieldName, String value) {
+        return false;
+    }
+}
+
 public class Main {
 
     public static void main(String[] args) {
@@ -28,6 +36,11 @@ public class Main {
         var queryList = new QueryList<>(lpaStudents);
         var matches = queryList.getMatches("Course", "Python");
         printMoreLists(matches);
+
+        var students2021 = QueryList.getMatches(students, "YearStarted", "2021");
+        printMoreLists(students2021);
+
+//        QueryList<Employee> employeeList = new QueryList<>();
     }
 
     public static void printMoreLists(List<? extends Student> students) {
