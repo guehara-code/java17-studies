@@ -1,10 +1,21 @@
 public class Meal {
 
-    private double base = 5.0;
+    private double price = 5.0;
     private Item burger;
     private Item drink;
     private Item side;
 
+    public Meal() {
+        burger = new Item("regular", "burger");
+        drink = new Item("coke", "drink" , 1.5);
+        System.out.println(drink.name);
+        side = new Item("fries", "side", 2.0);
+    }
+
+    @Override
+    public String toString() {
+        return "%s%n%s%n%s%n".formatted(burger, drink, side);
+    }
 
     private class Item {
 
@@ -13,7 +24,7 @@ public class Meal {
         private double price;
 
         public Item(String name, String type) {
-            this(name, type, type.equals("burger") ? base : 0);
+            this(name, type, type.equals("burger") ? Meal.this.price : 0);
         }
 
         public Item(String name, String type, double price) {
