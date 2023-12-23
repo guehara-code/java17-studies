@@ -1,7 +1,7 @@
 public class Meal {
 
     private double price = 5.0;
-    private Item burger;
+    private Burger burger;
     private Item drink;
     private Item side;
     private double conversionRate;
@@ -11,13 +11,13 @@ public class Meal {
     }
 
     public double getTotal() {
-        double total = burger.price + drink.price + side.price;
+        double total = burger.getPrice() + drink.price + side.price;
         return Item.getPrice(total, conversionRate);
     }
 
     public Meal(double conversionRate) {
         this.conversionRate = conversionRate;
-        burger = new Item("regular", "burger");
+        burger = new Burger("regular");
         drink = new Item("coke", "drink" , 1.5);
         System.out.println(drink.name);
         side = new Item("fries", "side", 2.0);
@@ -53,4 +53,17 @@ public class Meal {
             return price*rate;
         }
     }
+
+    private class Burger extends Item {
+
+        Burger(String name) {
+            super(name, "burger", 5.0);
+        }
+
+        public double getPrice() {
+            return super.price;
+        }
+
+    }
+
 }
