@@ -39,6 +39,26 @@ public class Main {
         for (StoreEmployee e : storeEmployees) {
             System.out.println(e);
         }
+    }
+
+    public static void addPigLatinName(List<? extends StoreEmployee> list) {
+
+        class DecoratedEmployee extends StoreEmployee {
+
+            private String pigLatinName;
+            private Employee originalInstance;
+
+            public DecoratedEmployee(String pigLatinName, Employee originalInstance) {
+                this.pigLatinName = pigLatinName;
+                this.originalInstance = originalInstance;
+            }
+
+            @Override
+            public String toString() {
+                return originalInstance.toString() + " " + pigLatinName;
+            }
+        }
 
     }
+
 }
