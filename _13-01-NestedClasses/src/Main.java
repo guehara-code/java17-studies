@@ -39,6 +39,9 @@ public class Main {
         for (StoreEmployee e : storeEmployees) {
             System.out.println(e);
         }
+
+        System.out.println("With Pig Latin Names");
+        addPigLatinName(storeEmployees);
     }
 
     public static void addPigLatinName(List<? extends StoreEmployee> list) {
@@ -57,6 +60,18 @@ public class Main {
             public String toString() {
                 return originalInstance.toString() + " " + pigLatinName;
             }
+        }
+
+        List<DecoratedEmployee> newList = new ArrayList<>(list.size());
+
+        for (var employee : list) {
+            String name = employee.getName();
+            String pigLatin = name.substring(1) + name.charAt(0) +"ay";
+            newList.add(new DecoratedEmployee(pigLatin, employee));
+        }
+
+        for (var dEmployee : newList) {
+            System.out.println(dEmployee);
         }
 
     }
