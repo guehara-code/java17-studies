@@ -21,8 +21,9 @@ public class Main {
 
         System.out.println("---------");
         list.forEach((var myString) -> {
+            String prefix = "nato";
             char first = myString.charAt(0);
-            System.out.println(myString + " means " + first);
+            System.out.println(prefix + " " + myString + " means " + first);
         });
     }
 }
