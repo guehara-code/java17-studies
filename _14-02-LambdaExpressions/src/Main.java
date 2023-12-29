@@ -47,6 +47,16 @@ public class Main {
 
         System.out.println("-------");
         coords.forEach(s -> processPoint(s[0], s[1], p1));
+
+        list.removeIf(s -> s.equalsIgnoreCase("bravo"));
+        list.forEach(s -> System.out.println(s));
+
+        list.addAll(List.of("echo", "easy", "earnest"));
+        list.forEach(s -> System.out.println(s));
+
+        System.out.println("-------");
+        list.removeIf(s -> s.startsWith("ea"));
+        list.forEach(s -> System.out.println(s));
     }
 
 
