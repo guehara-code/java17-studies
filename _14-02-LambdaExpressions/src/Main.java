@@ -57,6 +57,27 @@ public class Main {
         System.out.println("-------");
         list.removeIf(s -> s.startsWith("ea"));
         list.forEach(s -> System.out.println(s));
+
+        list.replaceAll(s -> s.charAt(0) + " - " + s.toUpperCase());
+        System.out.println("--------");
+        list.forEach(s -> System.out.println(s));
+
+        String[] emptyStrings = new String[10];
+        System.out.println(Arrays.toString(emptyStrings));
+        Arrays.fill(emptyStrings, "");
+        System.out.println(Arrays.toString(emptyStrings));
+
+        Arrays.setAll(emptyStrings, (i) -> "" + (i + 1) + ". ");
+        System.out.println(Arrays.toString(emptyStrings));
+
+        Arrays.setAll(emptyStrings, (i) -> "" + (i + 1) + ". " +
+                switch (i) {
+                    case 0 -> "one";
+                    case 1 -> "two";
+                    case 2 -> "three";
+                    default -> "";
+                });
+        System.out.println(Arrays.toString(emptyStrings));
     }
 
 
