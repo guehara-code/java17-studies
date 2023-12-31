@@ -1,10 +1,12 @@
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.function.Consumer;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        Consumer<String> printWorks = new Consumer<String>() {
+        Consumer<String> printWords = new Consumer<String>() {
             @Override
             public void accept(String sentence) {
                 String[] parts = sentence.split(" ");
@@ -13,6 +15,28 @@ public class Main {
                 }
             }
         };
+
+        Consumer<String> printWordLambda = sentence -> {
+            String[] parts = sentence.split(" ");
+            for (String part : parts) {
+                System.out.println(part);
+            }
+        };
+
+        printWords.accept("Let's split this up into an array");
+        printWordLambda.accept("Let's split this up into an array");
+
+        Consumer<String> printWordForEach = sentence -> {
+            String[] parts = sentence.split(" ");
+            Arrays.asList(parts).forEach(s -> System.out.println(s));
+        };
+
+        printWordForEach.accept("Let's split this up into an array");
+
+        Consumer<String> printWordsConcise = sentence -> {
+            Arrays.asList(sentence.split(" ")).forEach(s -> System.out.println(s));
+        };
+        printWordsConcise.accept("Let's split this up into an array");
     }
     
     public static String everySecondChar(String source) {
