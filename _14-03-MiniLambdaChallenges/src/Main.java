@@ -2,6 +2,7 @@ import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
 
 public class Main {
@@ -49,6 +50,16 @@ public class Main {
             }
             return returnVal.toString();
         };
+
+        System.out.println(everySecondChar.apply("1234567890"));
+
+        String result = everySecondCharacter(everySecondChar, "1234567890");
+        System.out.println(result);
+
+        Supplier<String> iLoveJava = () -> "I love Java!";
+
+        System.out.println(iLoveJava.get());
+
     }
     
     public static String everySecondChar(String source) {
@@ -60,5 +71,10 @@ public class Main {
             }
         }
         return returnVal.toString();
+    }
+
+    public static String everySecondCharacter(Function<String, String> func, String source) {
+
+        return func.apply(source);
     }
 }
