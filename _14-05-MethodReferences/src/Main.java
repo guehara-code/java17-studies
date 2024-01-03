@@ -1,10 +1,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.BiFunction;
-import java.util.function.BinaryOperator;
-import java.util.function.Supplier;
-import java.util.function.UnaryOperator;
+import java.util.function.*;
 
 class PlainOld {
 
@@ -46,6 +43,15 @@ public class Main {
         System.out.println(b2.apply("Hello", "World"));
         System.out.println(u1.apply("Hello"));
 
+        String result = "Hello".transform(u1);
+        System.out.println("Result = " + result);
+
+        result = result.transform(String::toLowerCase);
+        System.out.println("Result = " + result);
+
+        Function<String, Boolean> f0 = String::isEmpty;
+        boolean resultBoolean = result.transform(f0);
+        System.out.println("Result = " + resultBoolean);
 
     }
 
