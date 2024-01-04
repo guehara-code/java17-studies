@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class Main {
@@ -33,5 +34,13 @@ public class Main {
                 .andThen(s -> String.join(", ", s))
                 .andThen(String::length);
         System.out.println(f2.apply(name));
+
+        String[] names = {"Ann", "Bob", "Carol"};
+        Consumer<String> s0 = s -> System.out.print(s.charAt(0));
+        Consumer<String> s1 = System.out::println;
+        Arrays.asList(names).forEach(s0
+                .andThen(s -> System.out.print(" - "))
+                .andThen(s1));
+
     }
 }
