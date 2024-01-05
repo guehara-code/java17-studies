@@ -67,7 +67,11 @@ public class Main {
         boolean disjoint2 = Collections.disjoint(kings, tens);
         System.out.println("disjoint = " + disjoint2);
 
-
+        deck.sort(sortingAlgorithm);
+        Card tenOfHearts = Card.getNumericCard(Card.Suit.HEART, 10);
+        int foundIndex = Collections.binarySearch(deck, tenOfHearts, sortingAlgorithm);
+        System.out.println("foundIndex = " + foundIndex);
+        System.out.println(deck.get(foundIndex));
 
     }
 }
