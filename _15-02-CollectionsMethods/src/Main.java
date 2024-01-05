@@ -24,5 +24,15 @@ public class Main {
         Card kingOfClubs = Card.getFaceCard(Card.Suit.CLUB, 'K');
         List<Card> kingsOfClubs = Collections.nCopies(13, kingOfClubs);
         Card.printDeck(kingsOfClubs, "Kings of Clubs", 1);
+
+        Collections.addAll(cards, cardArray);
+        Collections.addAll(cards, cardArray);
+        Card.printDeck(cards, "Card Collection with Aces added", 2);
+
+        Collections.copy(cards, kingsOfClubs);
+        Card.printDeck(cards, "Card Collection with Kings copied", 2);
+
+        cards = List.copyOf(kingsOfClubs);
+        Card.printDeck(cards, "List Copy of Kings" , 1);
     }
 }
