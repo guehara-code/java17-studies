@@ -1,5 +1,4 @@
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class Main {
 
@@ -14,7 +13,16 @@ public class Main {
         Arrays.fill(cardArray, aceOfHearts);
         Card.printDeck(Arrays.asList(cardArray), "Aces of Hearts", 1);
 
-        
+        List<Card> cards = new ArrayList<>(52);
+        Collections.fill(cards, aceOfHearts);
+        System.out.println(cards);
+        System.out.println("cards.size() = " + cards.size());
 
+        List<Card> acesOfHearts = Collections.nCopies(13, aceOfHearts);
+        Card.printDeck(acesOfHearts, "Aces of Hearts", 1);
+
+        Card kingOfClubs = Card.getFaceCard(Card.Suit.CLUB, 'K');
+        List<Card> kingsOfClubs = Collections.nCopies(13, kingOfClubs);
+        Card.printDeck(kingsOfClubs, "Kings of Clubs", 1);
     }
 }
