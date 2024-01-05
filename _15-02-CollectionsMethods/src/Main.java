@@ -55,5 +55,19 @@ public class Main {
 
         List<Card> tens = new ArrayList<>(deck.subList(16, 20));
         Card.printDeck(tens, "Tens in deck", 1);
+
+//        Collections.shuffle(deck);
+        int subListIndex = Collections.indexOfSubList(deck, tens);
+        System.out.println("sublist index for tens = " + subListIndex);
+        System.out.println("Contains = " + deck.containsAll(tens));
+
+        boolean disjoint = Collections.disjoint(deck, tens);
+        System.out.println("disjoint = " + disjoint);
+
+        boolean disjoint2 = Collections.disjoint(kings, tens);
+        System.out.println("disjoint = " + disjoint2);
+
+
+
     }
 }
