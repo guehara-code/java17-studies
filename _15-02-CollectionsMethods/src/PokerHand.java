@@ -1,6 +1,7 @@
 import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class PokerHand {
@@ -22,8 +23,10 @@ public class PokerHand {
 
     @Override
     public String toString() {
-        return "%d. %-16s Rank:%d %-40s %s".formatted(
+        return "%d. %-16s Rank:%d %-40s Best:%-7s Worst:%-6s %s".formatted(
                 playerNo, score, score.ordinal(), hand,
+                Collections.max(hand, Comparator.comparing(Card::rank)),
+                Collections.min(hand, Comparator.comparing(Card::rank)),
                 (discards.size() > 0) ? "Discards:" + discards : "");
     }
 
@@ -61,6 +64,21 @@ public class PokerHand {
             setRank(last - start + 1);
             List<Card> sub = hand.subList(start, last + 1);
             keepers.addAll(sub);
+        }
+
+        pickDiscards();
+    }
+
+    private void pickDiscards() {
+
+        List<Card> temp = new ArrayList<>(hand);
+        temp.removeAll(keepers);
+        int rankedCards = keepers.size();
+        Collections.reverse(temp);
+        int index = 0;
+        for (Card c : temp) {
+            if (index++ < 3 && (rankedCards > 2 || c.rank() < 9)) discards.add(c);
+            else keepers.add(c);
         }
     }
 }
