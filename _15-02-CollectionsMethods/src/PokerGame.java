@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.function.Consumer;
 
 public class PokerGame {
 
@@ -24,7 +25,8 @@ public class PokerGame {
 
         deal();
         System.out.println("-----------------------");
-        pokerHands.forEach(System.out::println);
+        Consumer<PokerHand> checkHand = PokerHand::evalHand;
+        pokerHands.forEach(checkHand.andThen(System.out::println));
 
         int cardsDealt = playerCount * cardsInHand;
         int cardsRemaining = deck.size() - cardsDealt;
