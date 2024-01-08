@@ -25,6 +25,13 @@ public class PokerGame {
         deal();
         System.out.println("-----------------------");
         pokerHands.forEach(System.out::println);
+
+        int cardsDealt = playerCount * cardsInHand;
+        int cardsRemaining = deck.size() - cardsDealt;
+
+        remainingCards = new ArrayList<>(Collections.nCopies(cardsRemaining, null));
+        remainingCards.replaceAll(c -> deck.get(cardsDealt + remainingCards.indexOf(c)));
+        Card.printDeck(remainingCards, "Remaining Cards", 2);
     }
 
     private void deal() {
