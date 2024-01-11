@@ -1,6 +1,4 @@
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class Main {
 
@@ -10,6 +8,11 @@ public class Main {
         List<Contact> phones = ContactData.getData("phone");
         printData("Phone List", phones);
         printData("Email List", emails);
+
+        Set<Contact> emailContacts = new HashSet<>(emails);
+        Set<Contact> phoneContacts = new HashSet<>(phones);
+        printData("Phone Contacts", phoneContacts);
+        printData("Email Contacts", emailContacts);
     }
 
     public static void printData(String header, Collection<Contact> contacts) {
