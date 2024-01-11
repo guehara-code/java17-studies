@@ -57,5 +57,25 @@ public class Contact {
         return newContact;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
+        Contact contact = (Contact) o;
+
+        return getName().equals(contact.getName());
+    }
+
+    @Override
+    public int hashCode() {
+        return 33 * getName().hashCode();
+    }
+
+    public void addEmail(String companyName) {
+        String[] names = name.split(" ");
+        String email = "%c%s@%s.com".formatted(name.charAt(0), names[names.length - 1],
+                companyName.replaceAll(" ", "").toLowerCase());
+        emails.add(email);
+    }
 }
