@@ -25,6 +25,10 @@ public class Main {
         unionAB.addAll(emailContacts);
         unionAB.addAll(phoneContacts);
         printData("(A \u222A B) Union of email(A) with phones (B)", unionAB);
+
+        Set<Contact> intersectAB = new HashSet<>(emailContacts);
+        intersectAB.retainAll(phoneContacts);
+        printData("(A \u2229 B) Intersect emails (A) and phones (B)", intersectAB);
     }
 
     public static void printData(String header, Collection<Contact> contacts) {
