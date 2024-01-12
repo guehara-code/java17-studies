@@ -92,7 +92,7 @@ public class Task implements Comparable<Task> {
 
     @Override
     public int compareTo(Task o) {
-        
+
         int result = this.project.compareTo(o.project);
         if (result == 0) {
             result = this.description.compareTo(o.description);
