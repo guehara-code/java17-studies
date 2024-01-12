@@ -20,6 +20,11 @@ public class Main {
         robinHood.addEmail("Sherwood Forest");
         robinHood.replaceEmailIfExists("RHood@sherwoodforest.com", "RHood@sherwood.org");
         System.out.println(robinHood);
+
+        Set<Contact> unionAB = new HashSet<>();
+        unionAB.addAll(emailContacts);
+        unionAB.addAll(phoneContacts);
+        printData("(A \u222A B) Union of email(A) with phones (B)", unionAB);
     }
 
     public static void printData(String header, Collection<Contact> contacts) {
