@@ -28,5 +28,22 @@ public class TreeSetMain {
         fullList.sort(sorted.comparator());
         System.out.println("------------------------");
         fullList.forEach(System.out::println);
+
+        Contact min = Collections.min(fullSet, fullSet.comparator());
+        Contact max = Collections.max(fullSet, fullSet.comparator());
+
+        Contact first = fullSet.first();
+        Contact last = fullSet.last();
+
+        System.out.println("-------------------------");
+        System.out.printf("min = %s, first=%s %n", min.getName(), first.getName());
+        System.out.printf("max = %s, last=%s %n", max.getName(), last.getName());
+        System.out.println("-------------------------");
+
+        NavigableSet<Contact> copiedSet = new TreeSet<>(fullSet);
+        System.out.println("First element = " + copiedSet.pollFirst());
+        System.out.println("Last element = " + copiedSet.pollLast());
+        copiedSet.forEach(System.out::println);
+        System.out.println("--------------------------");
     }
 }
