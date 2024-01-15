@@ -1,9 +1,6 @@
 import com.sun.source.tree.Tree;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.NavigableSet;
-import java.util.TreeSet;
+import java.util.*;
 
 public class TreeSetMain {
 
@@ -17,5 +14,19 @@ public class TreeSetMain {
         NavigableSet<Contact> sorted = new TreeSet<>(mySort);
         sorted.addAll(phones);
         sorted.forEach(System.out::println);
+
+        NavigableSet<String> justNames = new TreeSet<>();
+        phones.forEach(c -> justNames.add(c.getName()));
+        System.out.println(justNames);
+
+        NavigableSet<Contact> fullSet = new TreeSet<>(sorted);
+        fullSet.addAll(emails);
+        fullSet.forEach(System.out::println);
+
+        List<Contact> fullList = new ArrayList<>(phones);
+        fullList.addAll(emails);
+        fullList.sort(sorted.comparator());
+        System.out.println("------------------------");
+        fullList.forEach(System.out::println);
     }
 }
