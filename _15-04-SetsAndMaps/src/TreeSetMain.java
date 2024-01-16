@@ -64,5 +64,9 @@ public class TreeSetMain {
         }
         System.out.println("-----------------------------");
 
+        NavigableSet<Contact> descendingSet = fullSet.descendingSet();
+        descendingSet.forEach(System.out::println);
+        System.out.println("-----------------------------");
+
     }
 }
