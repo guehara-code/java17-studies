@@ -108,27 +108,28 @@ public class Theatre {
 
             int index = 0;
             Seat first = null;
-            for(Seat current : contiguous) {
+            for (Seat current : contiguous) {
                 if (current.reserved) {
                     index = 0;
                     continue;
                 }
                 first = (index == 0) ? current : first;
                 if (++index == count) {
-                    selected = contiguous.subSet(first, true, current,true);
+                    selected = contiguous.subSet(first, true, current, true);
                     break;
                 }
                 if (selected != null) {
                     break;
                 }
             }
-
-            Set<Seat> reservedSeats = null;
-            if (selected != null) {
-                selected.forEach(s -> s.reserved = true);
-                reservedSeats = new TreeSet<>(selected);
-            }
-            return reservedSeats;
         }
+
+        Set<Seat> reservedSeats = null;
+        if (selected != null) {
+            selected.forEach(s -> s.reserved = true);
+            reservedSeats = new TreeSet<>(selected);
+        }
+        return reservedSeats;
+
     }
 }
