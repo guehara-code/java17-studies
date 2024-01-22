@@ -1,3 +1,4 @@
+import java.awt.event.ContainerAdapter;
 import java.sql.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,6 +21,26 @@ public class MapMain {
 
         for (Contact contact : fullList) {
             contacts.put(contact.getName(), contact);
+        }
+        contacts.forEach((k, v) -> System.out.println("key=" + k +", value=" + v));
+
+        System.out.println("------------------------------------");
+        System.out.println(contacts.get("Charlie Brown"));
+
+        System.out.println(contacts.get("Chuck Brown"));
+
+        Contact defaultContact = new Contact("Chuck Brown");
+        System.out.println(contacts.getOrDefault("Chuck Brown", defaultContact));
+
+        System.out.println("------------------------------------");
+        contacts.clear();
+        for (Contact contact : fullList) {
+            Contact duplicate = contacts.put(contact.getName(), contact);
+            if (duplicate != null) {
+//                System.out.println("duplicate = " + duplicate);
+//                System.out.println("current = " + contact);
+                contacts.put(contact.getName(), contact.mergeContactData(duplicate));
+            }
         }
         contacts.forEach((k, v) -> System.out.println("key=" + k +", value=" + v));
     }
