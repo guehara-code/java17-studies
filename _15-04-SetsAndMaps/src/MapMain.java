@@ -1,6 +1,8 @@
 import java.sql.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MapMain {
 
@@ -13,5 +15,12 @@ public class MapMain {
         fullList.addAll(emails);
         fullList.forEach(System.out::println);
         System.out.println("-----------------------------------");
+
+        Map<String, Contact> contacts = new HashMap<>();
+
+        for (Contact contact : fullList) {
+            contacts.put(contact.getName(), contact);
+        }
+        contacts.forEach((k, v) -> System.out.println("key=" + k +", value=" + v));
     }
 }
