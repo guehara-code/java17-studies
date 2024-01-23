@@ -71,5 +71,11 @@ public class MapMain {
                 ));
 
         contacts.forEach((k, v) -> System.out.println("key=" + k +", value=" + v));
+
+        System.out.println("------------------------------------");
+        for (String contactName : new String[] {"Daisy Duck", "Daffy Duck", "Scrooge McDuck"}) {
+            contacts.computeIfAbsent(contactName, k -> new Contact(k));
+        }
+        contacts.forEach((k, v) -> System.out.println("key=" + k + ", value=" + v));
     }
 }
