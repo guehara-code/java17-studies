@@ -103,5 +103,27 @@ public class MapMain {
         System.out.println("daisy = " + daisy);
         System.out.println("replaceContact = " + replacedContact);
         contacts.forEach((k, v) -> System.out.println("key=" + k + ", value=" + v));
+
+        System.out.println("------------------------------------");
+        Contact updatedDaisy = replacedContact.mergeContactData(daisy);
+        System.out.println("updatedDaisy = " + updatedDaisy);
+        boolean success = contacts.replace("Daisy Duck", daisy, updatedDaisy);
+        if (success) {
+            System.out.println("Successfully replaced element");
+        } else {
+            System.out.printf("Did not match on both key: %s and value: %s %n"
+                    .formatted("Daisy Duck", replacedContact));
+        }
+        contacts.forEach((k, v) -> System.out.println("key=" + k + ", value=" + v));
+
+        System.out.println("------------------------------------");
+        success = contacts.remove("Daisy Duck", daisy);
+        if (success) {
+            System.out.println("Successfully removed element");
+        } else {
+            System.out.printf("Did not match on both key: %s and value: %s %n"
+                    .formatted("Daisy Duck", daisy));
+        }
+        contacts.forEach((k, v) -> System.out.println("key=" + k + ", value=" + v));
     }
 }
