@@ -1,7 +1,4 @@
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 public class MapViewsMain {
 
@@ -22,6 +19,14 @@ public class MapViewsMain {
         }
 
         keysView.remove("Daffy Duck");
+        System.out.println(keysView);
+        contacts.forEach((k, v) -> System.out.println(v));
+
+        copyOfKeys.remove("Linus Van Pelt");
+        System.out.println(copyOfKeys);
+        contacts.forEach((k, v) -> System.out.println(v));
+
+        keysView.retainAll(List.of("Linus Van Pelt", "Charlie Brown", "Robin Hood", "Mickey Mouse"));
         System.out.println(keysView);
         contacts.forEach((k, v) -> System.out.println(v));
     }
