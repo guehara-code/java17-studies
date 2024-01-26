@@ -29,5 +29,22 @@ public class MapViewsMain {
         keysView.retainAll(List.of("Linus Van Pelt", "Charlie Brown", "Robin Hood", "Mickey Mouse"));
         System.out.println(keysView);
         contacts.forEach((k, v) -> System.out.println(v));
+
+        keysView.clear();
+        System.out.println(contacts);
+
+//        keysView.add("Daffy Duck");
+//        System.out.println(contacts);
+
+        ContactData.getData("email").forEach(c -> contacts.put(c.getName(), c));
+        ContactData.getData("phone").forEach(c -> contacts.put(c.getName(), c));
+        System.out.println(keysView);
+
+        var values = contacts.values();
+        values.forEach(System.out::println);
+
+        values.retainAll(ContactData.getData("email"));
+        System.out.println(keysView);
+        contacts.forEach((k, v) -> System.out.println(v));
     }
 }
