@@ -1,3 +1,8 @@
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class AdventureGame {
 
     private static final String GAME_LOCATIONS = """
@@ -14,5 +19,50 @@ public class AdventureGame {
     private enum Compass {
         E, N, S, W;
         private static final String[] directions = {"East", "North", "South", "West"};
+
+        public String getString() {
+            return directions[this.ordinal()];
+        }
     }
+
+    private record Location(String description, Map<Compass, String> nextPlaces) {}
+
+    private String lastPlace;
+    private Map<String, Location> adventureMap = new HashMap<>();
+
+    public AdventureGame() {
+
+    }
+
+    public AdventureGame(String customLocations) {
+
+    }
+
+    public void loadLocations(String data) {
+
+        for (String s : data.split("\\R")) {
+            String[] parts = s.split(",", 3);
+            Arrays.asList(parts).replaceAll(String::trim);
+            Map<Compass, String> nextPlaces = loadDirections(parts[2]);
+            Location location = new Location(parts[1], nextPlaces);
+            adventureMap.put(parts[0], location);
+        }
+        adventureMap.forEach((k, v) -> System.out.printf("%s:%s%n", k, v));
+    }
+
+    private Map<Compass, String> loadDirections(String nextPlaces) {
+
+        Map<Compass, String> directions = new HashMap<>();
+        List<String> nextSteps = Arrays.asList(nextPlaces.split(","));
+
+        nextSteps.replaceAll(String::trim);
+        for(String nextPlace : nextSteps) {
+            String[] splits = nextPlace.split(":");
+            Compass compass = Compass.valueOf(splits[0].trim());
+            String destination = splits[1].trim();
+            directions.put(compass, destination);
+        }
+        return directions;
+    }
+
 }
