@@ -31,11 +31,14 @@ public class AdventureGame {
     private Map<String, Location> adventureMap = new HashMap<>();
 
     public AdventureGame() {
-
+        this(null);
     }
 
     public AdventureGame(String customLocations) {
-
+        loadLocations(GAME_LOCATIONS);
+        if (customLocations != null) {
+            loadLocations(customLocations);
+        }
     }
 
     public void loadLocations(String data) {
