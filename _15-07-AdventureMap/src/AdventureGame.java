@@ -1,7 +1,4 @@
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class AdventureGame {
 
@@ -68,4 +65,33 @@ public class AdventureGame {
         return directions;
     }
 
+    private void visit(Location location) {
+
+        System.out.printf("*** You're standing %s ***", location.description);
+        System.out.println("\tFrom here, you can see:");
+
+        location.nextPlaces.forEach((k, v) -> {
+            System.out.printf("\t* A %s to the %s (%S) %n", v, k.getString(), k);
+        });
+        System.out.print("Select Your Compass (Q to quit) >> ");
+    }
+
+    public void move(String direction) {
+
+        var nextPlaces = adventureMap.get(lastPlace).nextPlaces;
+        String nextPlace = null;
+        if ("ENSW".contains(direction)) {
+            nextPlace = nextPlaces.get(Compass.valueOf(direction));
+            if (nextPlace != null) {
+                play(nextPlace);
+            }
+        } else {
+            System.out.println("!! Invalid direction, try again !!");
+        }
+    }
+
+    public void play(String location) {
+
+        if ()
+    }
 }
