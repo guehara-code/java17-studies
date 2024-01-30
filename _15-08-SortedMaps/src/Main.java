@@ -48,10 +48,13 @@ public class Main {
         Map<LocalDate, List<Purchase>> week1Purchases = datedPurchases.headMap(week1);
         Map<LocalDate, List<Purchase>> week2Purchases = datedPurchases.tailMap(week1);
 
-        System.out.println("------------------------");
-        week1Purchases.forEach((key, value) -> System.out.println(key + ": " + value));
-        System.out.println("------------------------");
-        week2Purchases.forEach((key, value) -> System.out.println(key + ": " + value));
+//        System.out.println("------------------------");
+//        week1Purchases.forEach((key, value) -> System.out.println(key + ": " + value));
+//        System.out.println("------------------------");
+//        week2Purchases.forEach((key, value) -> System.out.println(key + ": " + value));
+
+        displayStats(1, week1Purchases);
+        displayStats(2, week2Purchases);
     }
 
     private static void addPurchase(String name, Course course, double price) {
@@ -70,5 +73,23 @@ public class Main {
         Purchase purchase = new Purchase(course.courseId(),
                 existStudent.getId(), price, year, day);
         purchases.put(key, purchase);
+    }
+
+    private static void displayStats(int period, Map<LocalDate, List<Purchase>> periodData) {
+
+        System.out.println("--------------------------");
+        Map<String, Integer> weeklyCounts = new TreeMap<>();
+        periodData.forEach((key, value) -> {
+            System.out.println(key + ": " + value);
+            for (Purchase p : value) {
+                System.out.println("p: " + p);
+                weeklyCounts.merge(p.courseId(), 1, (prev, current) -> {
+                    System.out.println("prev: " + prev);
+                    System.out.println("current: " + current);
+                    return prev + current;
+                });
+            }
+        });
+        System.out.printf("Week %d Purchases = %s%n", period, weeklyCounts);
     }
 }
