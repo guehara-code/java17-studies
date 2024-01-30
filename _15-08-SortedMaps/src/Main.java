@@ -40,6 +40,18 @@ public class Main {
         }
 
         datedPurchases.forEach((key, value) -> System.out.println(key + ": " + value));
+
+        int currentYear = LocalDate.now().getYear();
+
+        LocalDate firstDay = LocalDate.ofYearDay(currentYear, 1);
+        LocalDate week1 = firstDay.plusDays(7);
+        Map<LocalDate, List<Purchase>> week1Purchases = datedPurchases.headMap(week1);
+        Map<LocalDate, List<Purchase>> week2Purchases = datedPurchases.tailMap(week1);
+
+        System.out.println("------------------------");
+        week1Purchases.forEach((key, value) -> System.out.println(key + ": " + value));
+        System.out.println("------------------------");
+        week2Purchases.forEach((key, value) -> System.out.println(key + ": " + value));
     }
 
     private static void addPurchase(String name, Course course, double price) {
