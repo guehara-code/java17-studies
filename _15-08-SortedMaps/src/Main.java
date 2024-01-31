@@ -55,6 +55,14 @@ public class Main {
 
         displayStats(1, week1Purchases);
         displayStats(2, week2Purchases);
+
+        System.out.println("---------------------------");
+
+        LocalDate lastDate = datedPurchases.lastKey();
+        var previousEntry = datedPurchases.lastEntry();
+
+        List<Purchase> lastDaysData = previousEntry.getValue();
+        System.out.println(lastDate + " purchases : " + lastDaysData.size());
     }
 
     private static void addPurchase(String name, Course course, double price) {
@@ -82,10 +90,10 @@ public class Main {
         periodData.forEach((key, value) -> {
             System.out.println(key + ": " + value);
             for (Purchase p : value) {
-                System.out.println("p: " + p);
+//                System.out.println("p: " + p);
                 weeklyCounts.merge(p.courseId(), 1, (prev, current) -> {
-                    System.out.println("prev: " + prev);
-                    System.out.println("current: " + current);
+//                    System.out.println("prev: " + prev);
+//                    System.out.println("current: " + current);
                     return prev + current;
                 });
             }
