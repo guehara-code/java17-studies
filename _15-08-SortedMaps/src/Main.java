@@ -61,8 +61,31 @@ public class Main {
         LocalDate lastDate = datedPurchases.lastKey();
         var previousEntry = datedPurchases.lastEntry();
 
-        List<Purchase> lastDaysData = previousEntry.getValue();
-        System.out.println(lastDate + " purchases : " + lastDaysData.size());
+        while (previousEntry != null) {
+
+            List<Purchase> lastDaysData = previousEntry.getValue();
+            System.out.println(lastDate + " purchases : " + lastDaysData.size());
+
+            LocalDate prevDate = datedPurchases.lowerKey(lastDate);
+            previousEntry = datedPurchases.lowerEntry(lastDate);
+            lastDate = prevDate;
+        }
+
+        System.out.println("---------------------------");
+
+        var reversed = datedPurchases.descendingMap();
+
+        LocalDate firstDate = reversed.firstKey();
+        var nextEntry = reversed.firstEntry();
+
+        while (nextEntry != null) {
+            List<Purchase> lastDaysData = nextEntry.getValue();
+            System.out.println(firstDate + " purchases : " + lastDaysData.size());
+
+            LocalDate nextDate = reversed.higherKey(firstDate);
+            nextEntry = reversed.higherEntry(firstDate);
+            firstDate = nextDate;
+        }
     }
 
     private static void addPurchase(String name, Course course, double price) {
