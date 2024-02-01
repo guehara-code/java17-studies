@@ -31,4 +31,30 @@ public class InventoryItem {
         }
         return false;
     }
+
+    public void releaseItem(int qty) {
+        qtyReserved -= qty;
+    }
+
+    public boolean sellItem(int qty) {
+
+        if (qtyTotal >= qty) {
+            qtyTotal -= qty;
+            qtyReserved -= qty;
+            if (qtyTotal <= qtyLow) {
+                placeInventoryOrder();
+            }
+            return true;
+        }
+        return false;
+    }
+
+    private void placeInventoryOrder() {
+        System.out.printf("Ordering qty %d : %s%n", qtyReorder, product);
+    }
+
+    @Override
+    public String toString() {
+        return "%s, $%.2f : [%04d,% 2d]".formatted(product, price, qtyTotal, qtyReorder);
+    }
 }
