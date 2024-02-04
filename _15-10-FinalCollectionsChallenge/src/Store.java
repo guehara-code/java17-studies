@@ -5,10 +5,13 @@ public class Store {
     private static Random random = new Random();
     private Map<String, InventoryItem> inventory;
     private NavigableSet<Cart> carts = new TreeSet<>(Comparator.comparing(Cart::getId));
-    private Map<Category, Map<String, InventoryItem>> asleInventory;
+    private Map<Category, Map<String, InventoryItem>> aisleInventory;
 
     public static void main(String[] args) {
 
+        Store myStore = new Store();
+        myStore.stockStore();
+        myStore.listInventory();
 
     }
 
@@ -55,6 +58,23 @@ public class Store {
 
     private void stockAisles() {
 
+        aisleInventory = new EnumMap<>(Category.class);
+        for (InventoryItem item : inventory.values()) {
+            Category aisle = item.getProduct().category();
+
+            Map<String, InventoryItem> productMap = aisleInventory.get(aisle);
+            if (productMap == null) {
+                productMap = new TreeMap<>();
+            }
+            productMap.put(item.getProduct().name(), item);
+            aisleInventory.putIfAbsent(aisle, productMap);
+        }
+    }
+
+    private void listInventory() {
+
+        System.out.println("----------------------------------------------------");
+        inventory.values().forEach(System.out::println);
     }
 
 }
