@@ -13,6 +13,9 @@ public class Store {
         myStore.stockStore();
         myStore.listInventory();
 
+        myStore.stockAisles();
+        myStore.listProductsByCategory();
+
     }
 
     private void manageStoreCarts() {
@@ -29,6 +32,11 @@ public class Store {
     }
 
     private void listProductsByCategory() {
+
+        aisleInventory.keySet().forEach(k -> {
+            System.out.println("----------\n" + k + "\n----------");
+            aisleInventory.get(k).keySet().forEach(System.out::println);
+        });
 
     }
 
