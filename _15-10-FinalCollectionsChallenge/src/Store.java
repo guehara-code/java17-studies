@@ -16,10 +16,23 @@ public class Store {
         myStore.stockAisles();
         myStore.listProductsByCategory();
 
+        myStore.manageStoreCarts();
+        myStore.listProductsByCategory(false, true);
     }
 
     private void manageStoreCarts() {
 
+        Cart cart1 = new Cart(Cart.CartType.PHYSICAL, 1);
+        carts.add(cart1);
+
+        InventoryItem item = aisleInventory.get(Category.PRODUCE).get("apple");
+        cart1.addItem(item, 6);
+        cart1.addItem(aisleInventory.get(Category.PRODUCE).get("pear"), 5);
+        cart1.addItem(aisleInventory.get(Category.BEVERAGE).get("coffee"), 1);
+        System.out.println(cart1);
+
+        cart1.removeItem(aisleInventory.get(Category.PRODUCE).get("pear"), 2);
+        System.out.println(cart1);
     }
 
     private boolean checkOUtCart(Cart cart) {
@@ -33,9 +46,19 @@ public class Store {
 
     private void listProductsByCategory() {
 
+       listProductsByCategory(true, false);
+
+    }
+
+    private void listProductsByCategory(boolean includeHeader, boolean includeDetail) {
+
         aisleInventory.keySet().forEach(k -> {
-            System.out.println("----------\n" + k + "\n----------");
-            aisleInventory.get(k).keySet().forEach(System.out::println);
+            if (includeHeader) System.out.println("----------\n" + k + "\n----------");
+            if (!includeDetail) {
+                aisleInventory.get(k).keySet().forEach(System.out::println);
+            } else {
+                aisleInventory.get(k).values().forEach(System.out::println);
+            }
         });
 
     }
