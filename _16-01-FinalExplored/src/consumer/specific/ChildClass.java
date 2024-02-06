@@ -11,10 +11,10 @@ public class ChildClass extends BaseClass {
         super.optionalMethod();
     }
 
-    @Override
-    public void recommendedMethod() {
-
-        System.out.println("[Child:recommendedMethod]: I'll do things my way");
-        optionalMethod();
-    }
+//    @Override
+//    public void recommendedMethod() {
+//
+//        System.out.println("[Child:recommendedMethod]: I'll do things my way");
+//        optionalMethod();
+//    }
 }

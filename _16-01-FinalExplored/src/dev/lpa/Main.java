@@ -16,5 +16,12 @@ public class Main {
         childReferredToAsBase.recommendedMethod();
         System.out.println("---------------------------");
         child.recommendedMethod();
+
+        System.out.println("---------------------------");
+        parent.recommendedStatic();
+        System.out.println("---------------------------");
+        childReferredToAsBase.recommendedStatic();
+        System.out.println("---------------------------");
+        child.recommendedStatic();
     }
 }
