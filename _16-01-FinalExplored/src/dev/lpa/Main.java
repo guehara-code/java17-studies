@@ -2,6 +2,7 @@ package dev.lpa;
 
 import consumer.specific.ChildClass;
 import dev.lpa.generic.BaseClass;
+import external.util.Logger;
 
 public class Main {
 
@@ -33,6 +34,12 @@ public class Main {
         doXYZ(xArgument, 16, zArgument);
         System.out.println("After Method, xArgument: " + xArgument);
         System.out.println("After Method, zArgument: " + zArgument);
+
+        StringBuilder tracker = new StringBuilder("Step 1 is abc");
+        Logger.logToConsole(tracker.toString());
+        tracker.append(", Step2 is xyz.");
+        Logger.logToConsole(tracker.toString());
+        System.out.println("After logging, tracker = " + tracker);
 
     }
 
