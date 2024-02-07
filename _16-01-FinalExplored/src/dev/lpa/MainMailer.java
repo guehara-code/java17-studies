@@ -1,5 +1,6 @@
 package dev.lpa;
 
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,25 @@ public class MainMailer {
             counts.merge(s, 1, Integer::sum);
         });
         System.out.println(counts);
+
+        StringBuilder annJonesPhd = new StringBuilder("Ann Jones Ph.D.");
+        System.out.println("There are " + counts.get(annJonesPhd) +
+                " records for " + annJonesPhd);
+
+        List<StringBuilder> cleanedNames = standardizeNames(population);
+        System.out.println(cleanedNames);
+        System.out.println("There are " + counts.get(annJonesPhd) +
+                " records for " + annJonesPhd);
+        System.out.println(counts);
+
+        StringBuilder annJones = new StringBuilder("Ann Jones");
+        System.out.println("There are " + counts.get(annJones) +
+                " records for " + annJones);
+        System.out.println("----------------------");
+        counts.forEach((k, v) -> System.out.println(k + " : " + v));
+
+        System.out.println("----------------------");
+        counts.keySet().forEach(k -> System.out.println(k + " : " + counts.get(k)));
     }
 
     private static List<StringBuilder> getNames(String[] names) {
@@ -31,5 +51,20 @@ public class MainMailer {
             index++;
         }
         return list;
+    }
+
+    private static List<StringBuilder> standardizeNames(List<StringBuilder> list) {
+
+        List<StringBuilder> newList = new ArrayList<>();
+        for (var name : list) {
+            for (String suffix : new String[]{"Ph.D.", "M.D."}) {
+                int startIndex = -1;
+                if ((startIndex = name.indexOf(suffix)) > -1) {
+                    name.replace(startIndex - 1, startIndex + suffix.length(), "");
+                }
+            }
+            newList.add(name);
+        }
+        return newList;
     }
 }
