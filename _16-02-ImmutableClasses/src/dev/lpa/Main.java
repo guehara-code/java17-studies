@@ -31,6 +31,16 @@ public class Main {
 
         john.setKids(new Person[]{new Person("Ann", "04/04/1930")});
         System.out.println(john);
+
+        Person[] kids = john.getKids();
+        kids[0] = jim;
+        System.out.println(john);
+
+        kids = null;
+        System.out.println(john);
+
+        john.setKids(kids);
+        System.out.println(john);
     }
 }
 
