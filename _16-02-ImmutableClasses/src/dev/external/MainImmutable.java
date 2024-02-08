@@ -1,6 +1,8 @@
-package dev.lpa;
+package dev.external;
 
-public class MainRecord {
+import dev.lpa.PersonImmutable;
+
+public class MainImmutable {
 
     public static void main(String[] args) {
 
@@ -13,13 +15,11 @@ public class MainRecord {
 
         System.out.println(john);
 
-        PersonImmutable johnCopy = new PersonImmutable("John", "05/05/1900");
-        System.out.println(johnCopy);
 
-        PersonImmutable[] kids = johnCopy.kids();
+        PersonImmutable[] kids = john.kids();
         kids[0] = jim;
         kids[1] = new PersonImmutable("Ann", "04/04/1936");
-        System.out.println(johnCopy);
+        System.out.println(john);
 
         johnsKids[0] = new PersonImmutable("Ann", "04/04/1936");
         System.out.println(john);

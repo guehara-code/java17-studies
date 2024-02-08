@@ -2,10 +2,10 @@ package dev.lpa;
 
 import java.util.Arrays;
 
-public record PersonRecord(String name, String dob, PersonRecord[] kids) {
+public record PersonImmutable(String name, String dob, PersonImmutable[] kids) {
 
-    public PersonRecord(String name, String dob) {
-        this(name, dob, new PersonRecord[20]);
+    public PersonImmutable(String name, String dob) {
+        this(name, dob, new PersonImmutable[20]);
     }
 
     @Override
@@ -21,7 +21,7 @@ public record PersonRecord(String name, String dob, PersonRecord[] kids) {
     }
 
     @Override
-    public PersonRecord[] kids() {
+    public PersonImmutable[] kids() {
         return kids == null ? null : Arrays.copyOf(kids, kids.length);
     }
 }

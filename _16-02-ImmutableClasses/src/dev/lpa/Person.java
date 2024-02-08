@@ -4,14 +4,14 @@ import java.util.Arrays;
 
 public class Person {
 
-    private String name;
-    private String dob;
-    private Person[] kids;
+    private final String name;
+    private final String dob;
+    private final Person[] kids;
 
     public Person(String name, String dob, Person[] kids) {
         this.name = name;
         this.dob = dob;
-        this.kids = kids;
+        this.kids = kids == null ? null : Arrays.copyOf(kids, kids.length);
     }
 
     public Person(String name, String dob) {
@@ -29,12 +29,12 @@ public class Person {
 
 
     public Person[] getKids() {
-        return kids;
+        return kids == null ? null : Arrays.copyOf(kids, kids.length);
     }
 
-    public void setKids(Person[] kids) {
-        this.kids = kids;
-    }
+//    public void setKids(Person[] kids) {
+//        this.kids = kids;
+//    }
 
     @Override
     public String toString() {
