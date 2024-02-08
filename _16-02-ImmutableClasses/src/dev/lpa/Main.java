@@ -29,7 +29,7 @@ public class Main {
 
         System.out.println(john);
 
-        john.setKids(new Person[]{new Person("Ann", "04/04/1930")});
+//        john.setKids(new Person[]{new Person("Ann", "04/04/1930")});
         System.out.println(john);
 
         Person[] kids = john.getKids();
@@ -39,7 +39,7 @@ public class Main {
         kids = null;
         System.out.println(john);
 
-        john.setKids(kids);
+//        john.setKids(kids);
         System.out.println(john);
     }
 }

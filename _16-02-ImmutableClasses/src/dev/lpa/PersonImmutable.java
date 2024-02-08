@@ -2,11 +2,39 @@ package dev.lpa;
 
 import java.util.Arrays;
 
-public record PersonImmutable(String name, String dob, PersonImmutable[] kids) {
+public class PersonImmutable {
+
+    private final String name;
+    private final String dob;
+    private final PersonImmutable[] kids;
+
+    public PersonImmutable(String name, String dob, PersonImmutable[] kids) {
+        this.name = name;
+        this.dob = dob;
+        this.kids = kids == null ? null : Arrays.copyOf(kids, kids.length);
+    }
 
     public PersonImmutable(String name, String dob) {
-        this(name, dob, new PersonImmutable[20]);
+        this(name, dob, null);
     }
+
+    public String getName() {
+        return name;
+    }
+
+
+    public String getDob() {
+        return dob;
+    }
+
+
+    public PersonImmutable[] getKids() {
+        return kids == null ? null : Arrays.copyOf(kids, kids.length);
+    }
+
+//    public void setKids(Person[] kids) {
+//        this.kids = kids;
+//    }
 
     @Override
     public String toString() {
@@ -18,10 +46,5 @@ public record PersonImmutable(String name, String dob, PersonImmutable[] kids) {
             kidString = String.join(", ", names);
         }
         return name + ", dob = " + dob + ", kids = " + kidString;
-    }
-
-    @Override
-    public PersonImmutable[] kids() {
-        return kids == null ? null : Arrays.copyOf(kids, kids.length);
     }
 }
