@@ -24,7 +24,7 @@ public class BankCustomer {
     }
 
     public List<BankAccount> getAccounts() {
-        return accounts;
+        return new ArrayList<>(accounts);
     }
 
     @Override
