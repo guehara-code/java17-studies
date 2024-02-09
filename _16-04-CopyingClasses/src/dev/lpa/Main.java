@@ -1,9 +1,16 @@
 package dev.lpa;
 
 
+import java.lang.reflect.Array;
 import java.util.Arrays;
 
 record Person (String name, String dob, Person[] kids) {
+
+
+    public Person(Person p) {
+        this(p.name, p.dob,
+                p.kids == null ? null : Arrays.copyOf(p.kids, p.kids.length));
+    }
 
     @Override
     public String toString() {
@@ -25,7 +32,16 @@ public class Main {
         Person jill = new Person("Jill", "05/05/1965", new Person[]{joe, jim});
 
         Person[] persons = {joe, jim, jack, jane, jill};
-        Person[] personCopy = Arrays.copyOf(persons, persons.length);
+        //Person[] personCopy = Arrays.copyOf(persons, persons.length);
+        Person[] personCopy = new Person[5];
+
+        for (int i = 0; i < 5; i++) {
+//            Person current = persons[i];
+//            var kids = current.kids() == null ? null :
+//                    Arrays.copyOf(current.kids(), current.kids().length);
+//            personCopy[i] = new Person(current.name(), current.dob(), kids);
+            personCopy[i] = new Person(persons[i]);
+        }
 
         var jillsKids = personCopy[4].kids();
         jillsKids[1] = jane;
@@ -35,5 +51,8 @@ public class Main {
                 System.out.println("Equal References " + persons[i]);
             }
         }
+
+        System.out.println(persons[4]);
+        System.out.println(personCopy[4]);
     }
 }
