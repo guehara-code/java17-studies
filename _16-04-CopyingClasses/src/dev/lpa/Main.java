@@ -35,13 +35,15 @@ public class Main {
         //Person[] personCopy = Arrays.copyOf(persons, persons.length);
         Person[] personCopy = new Person[5];
 
-        for (int i = 0; i < 5; i++) {
-//            Person current = persons[i];
-//            var kids = current.kids() == null ? null :
-//                    Arrays.copyOf(current.kids(), current.kids().length);
-//            personCopy[i] = new Person(current.name(), current.dob(), kids);
-            personCopy[i] = new Person(persons[i]);
-        }
+        Arrays.setAll(personCopy, i -> new Person(persons[i]));
+
+//        for (int i = 0; i < 5; i++) {
+////            Person current = persons[i];
+////            var kids = current.kids() == null ? null :
+////                    Arrays.copyOf(current.kids(), current.kids().length);
+////            personCopy[i] = new Person(current.name(), current.dob(), kids);
+//            personCopy[i] = new Person(persons[i]);
+//        }
 
         var jillsKids = personCopy[4].kids();
         jillsKids[1] = jane;
