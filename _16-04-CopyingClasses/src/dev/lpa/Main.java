@@ -32,10 +32,11 @@ public class Main {
         Person jill = new Person("Jill", "05/05/1965", new Person[]{joe, jim});
 
         Person[] persons = {joe, jim, jack, jane, jill};
+        Person[] personCopy = persons.clone();
         //Person[] personCopy = Arrays.copyOf(persons, persons.length);
-        Person[] personCopy = new Person[5];
+//        Person[] personCopy = new Person[5];
 
-        Arrays.setAll(personCopy, i -> new Person(persons[i]));
+//        Arrays.setAll(personCopy, i -> new Person(persons[i]));
 
 //        for (int i = 0; i < 5; i++) {
 ////            Person current = persons[i];
