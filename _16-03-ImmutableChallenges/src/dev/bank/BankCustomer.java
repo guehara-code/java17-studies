@@ -38,6 +38,7 @@ public class BankCustomer {
                 return account;
             }
         }
+        return null;
     }
 
     @Override
