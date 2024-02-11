@@ -17,6 +17,8 @@ public class Main {
 
         Person joeCopy = new Person(joe);
         System.out.println(joeCopy);
+
+        Generation g = Generation.BABY_BOOMER;
     }
 
 }
