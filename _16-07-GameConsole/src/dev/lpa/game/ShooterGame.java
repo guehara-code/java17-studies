@@ -26,4 +26,12 @@ public class ShooterGame extends Game<Shooter> {
         map.putAll(getStandardActions());
         return map;
     }
+
+    public boolean findPrize(int playerIndex) {
+        return getPlayer(playerIndex).findPrize();
+    }
+
+    public boolean useWeapon(int playerIndex) {
+        return getPlayer(playerIndex).useWeapon("pistol");
+    }
 }
