@@ -1,5 +1,7 @@
 package dev.lpa.game;
 
+import dev.lpa.pirate.PirateGame;
+
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
