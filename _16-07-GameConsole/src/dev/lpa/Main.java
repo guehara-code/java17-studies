@@ -4,6 +4,7 @@ import dev.lpa.game.GameConsole;
 import dev.lpa.game.ShooterGame;
 import dev.lpa.pirate.Pirate;
 import dev.lpa.pirate.PirateGame;
+import dev.lpa.pirate.Town;
 import dev.lpa.pirate.Weapon;
 
 public class Main {
@@ -29,8 +30,13 @@ public class Main {
         System.out.println("-----------------------------------------------------");
         PirateGame.getTowns(1).forEach(System.out::println);
 
-        var console = new GameConsole<>(new PirateGame("The Pirate Game"));
-        int playerIndex = console.addPlayer();
-        console.playGame(playerIndex);
+        Town bridgetown = new Town("Bridgetown", "Barbados", 0);
+        System.out.println(bridgetown);
+        System.out.println(bridgetown.information());
+
+//        var console = new GameConsole<>(new PirateGame("The Pirate Game"));
+//        int playerIndex = console.addPlayer();
+//        console.playGame(playerIndex);
     }
 }
+
