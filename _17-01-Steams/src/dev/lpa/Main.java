@@ -1,6 +1,7 @@
 package dev.lpa;
 
 import java.util.*;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class Main {
@@ -85,6 +86,44 @@ public class Main {
                 .map(e -> e.getKey() + " has range: " + e.getValue()[0] + " - " +
                         e.getValue()[e.getValue().length -1])
                 .forEach(System.out::println);
+
+        Random random = new Random();
+        Stream.generate(() -> random.nextInt(2))
+                .limit(10)
+                .forEach(s -> System.out.print(s + " "));
+
+        System.out.println();
+        IntStream.iterate(1, n -> n + 1)
+                .filter(Main::isPrime)
+                .limit(20)
+                .forEach(s -> System.out.print(s + " "));
+
+        System.out.println();
+        IntStream.iterate(1, n -> n + 1)
+                .limit(100)
+                .filter(Main::isPrime)
+                .forEach(s -> System.out.print(s + " "));
+
+        System.out.println();
+        IntStream.iterate(1, n -> n <= 100, n -> n + 1)
+                .filter(Main::isPrime)
+                .forEach(s -> System.out.print(s + " "));
+
+
+    }
+
+    public static boolean isPrime(int wholeNumber) {
+
+        if (wholeNumber <= 2) {
+            return (wholeNumber == 2);
+        }
+
+        for (int divisor = 2; divisor < wholeNumber; divisor++) {
+            if (wholeNumber % divisor == 0) {
+                return false;
+            }
+        }
+        return true;
     }
 
 }
