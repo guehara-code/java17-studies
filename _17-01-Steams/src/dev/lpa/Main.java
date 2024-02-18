@@ -109,6 +109,10 @@ public class Main {
                 .filter(Main::isPrime)
                 .forEach(s -> System.out.print(s + " "));
 
+        System.out.println();
+        IntStream.rangeClosed(1, 100)
+                .filter(Main::isPrime)
+                .forEach(s -> System.out.print(s + " "));
 
     }
 
