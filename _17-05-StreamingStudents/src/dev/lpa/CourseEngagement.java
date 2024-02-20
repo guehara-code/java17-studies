@@ -42,7 +42,7 @@ public class CourseEngagement {
     }
 
     public double getPercentComplete() {
-        return lastLecture * 100.0 / course.lectureCount()
+        return lastLecture * 100.0 / course.lectureCount();
     }
 
     public int getMonthsSinceActive() {
