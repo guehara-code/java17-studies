@@ -16,8 +16,16 @@ public class Main {
 //        tim.watchLecture("PYMC", 7, 7, 2020);
 //        System.out.println(tim);
 
-        Stream.generate(() -> Student.getRandomStudent(jmc, pymc))
-                .limit(10)
-                .forEach(System.out::println);
+//        Stream.generate(() -> Student.getRandomStudent(jmc, pymc))
+//                .limit(10)
+//                .forEach(System.out::println);
+
+        var maleStudents = Stream.generate(
+                () -> Student.getRandomStudent(jmc, pymc))
+                .limit(1000);
+
+        maleStudents = maleStudents.filter(s -> s.getGender().equals("M"));
+
+        System.out.println("# of male students " + maleStudents.count());
     }
 }
