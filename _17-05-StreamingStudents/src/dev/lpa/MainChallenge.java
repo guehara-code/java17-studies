@@ -1,6 +1,9 @@
 package dev.lpa;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -27,11 +30,37 @@ public class MainChallenge {
         int topPercent = (int) (1.25 * avePercent);
         System.out.printf("Best Percetage Complete = %d%% %n", topPercent);
 
+        Comparator<Student> longTermStudent = Comparator.comparing(Student::getYearsSinceEnrolled);
+
         List<Student> hardWorkers = students.stream()
                 .filter(s -> s.getMonthsSinceActive("JMC") == 0)
                 .filter(s -> s.getPercentComplete("JMC") >= topPercent)
+                .limit(10)
                 .toList();
 
         System.out.println("hardWorkers = " + hardWorkers.size());
+
+        hardWorkers.forEach(s -> {
+            s.addCourse(jgames);
+            System.out.print(s.getStudentId() + " ");
+        });
+
+        System.out.println();
+
+        Comparator<Student> uniqueSorted = longTermStudent.thenComparing(Student::getStudentId);
+
+        students.stream()
+                .filter(s -> s.getMonthsSinceActive("JMC") == 0)
+                .filter(s -> s.getPercentComplete("JMC") >= topPercent)
+                .limit(10)
+//                .toList()
+//                .collect(Collectors.toList())
+//                .collect(Collectors.toSet())
+//                .collect(() -> new TreeSet<>(uniqueSorted),
+//                        TreeSet::add, TreeSet::addAll)
+                .forEach(s -> {
+                    s.addCourse(jgames);
+                    System.out.print(s.getStudentId() + " ");
+                });
     }
 }
