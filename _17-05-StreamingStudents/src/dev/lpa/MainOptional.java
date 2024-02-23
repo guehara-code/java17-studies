@@ -32,9 +32,21 @@ public class MainOptional {
         System.out.println(o2);
         o2.ifPresent(System.out::println);
 
-        Student firstStudent = o2.orElse(null);
-        long id = (firstStudent == null) ? -1 : firstStudent.getStudentId();
+//        Student firstStudent = o2.orElse(getDummyStudent(jmc));
+        Student firstStudent = o2.orElseGet(() -> getDummyStudent(jmc));
+        long id = firstStudent.getStudentId();
         System.out.println("firstStudent's id is " + id);
+
+        List<String> countries = students.stream()
+                .map(Student::getCountryCode)
+                .distinct()
+                .toList();
+
+        Optional.of(countries)
+                .map(l -> String.join(",", l))
+                .filter(l -> l.contains("FR"))
+                .ifPresentOrElse(System.out::println,
+                        () -> System.out.println("Missing FR"));
     }
 
     private static Optional<Student> getStudent(List<Student> list, String type) {
@@ -47,5 +59,12 @@ public class MainOptional {
             return Optional.ofNullable(list.get(list.size() - 1));
         }
         return Optional.ofNullable(list.get(new Random().nextInt(list.size())));
+    }
+
+    private static Student getDummyStudent(Course... courses) {
+
+        System.out.println("Getting the dummy student");
+        return new Student("NO", 1, 1, "U",
+                false, courses);
     }
 }
