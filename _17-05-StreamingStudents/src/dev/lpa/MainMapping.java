@@ -54,5 +54,11 @@ public class MainMapping {
             value.forEach((key1, value1) ->
                     System.out.println("\t" + key1 + value1.size()));
         });
+
+        long studentBodyCount = 0;
+        for (var list : experienced.values()) {
+            studentBodyCount += list.size();
+        }
+        System.out.println("studentBodyCount = " + studentBodyCount);
     }
 }
