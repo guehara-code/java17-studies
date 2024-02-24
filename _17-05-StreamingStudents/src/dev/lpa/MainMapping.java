@@ -74,5 +74,25 @@ public class MainMapping {
                 .sum();
         System.out.println("studentBodyCount = " + studentBodyCount);
 
+        long count = experienced.values().stream()
+                .flatMap(l -> l.stream())
+                .filter(s -> s.getMonthsSinceActive() <= 3)
+                .count();
+        System.out.println("Active Students = " + count);
+
+        count = multiLevel.values().stream()
+                .flatMap(map -> map.values().stream()
+                        .flatMap(l -> l.stream()))
+                .filter(s -> s.getMonthsSinceActive() <= 3)
+                .count();
+        System.out.println("Active Students in multilevel = " + count);
+
+        count = multiLevel.values().stream()
+                .flatMap(map -> map.values().stream())
+                .flatMap(l -> l.stream())
+                .filter(s -> s.getMonthsSinceActive() <= 3)
+                .count();
+        System.out.println("Active Students in multilevel = " + count);
+
     }
 }
