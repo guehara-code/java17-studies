@@ -17,6 +17,10 @@ public class CourseEngagement {
         this.engagementType = engagementType;
     }
 
+    public String getCourseCode() {
+        return course.courseCode();
+    }
+
     public String getCourse() {
         return course.courseCode();
     }
