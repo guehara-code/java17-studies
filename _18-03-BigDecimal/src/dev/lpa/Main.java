@@ -2,6 +2,7 @@ package dev.lpa;
 
 import java.lang.reflect.Array;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Arrays;
 
 public class Main {
@@ -33,12 +34,14 @@ public class Main {
             System.out.printf("%-15s %-15d %-8d %d %n", bd, bd.unscaledValue(), bd.scale(), bd.precision());
         }
 
-        double[] doubles = {15.456, 8, 10000.000001, .123};
+        double[] doubles = {15.456, 8, 10000.000001, .125};
 //        Arrays.setAll(bds, i -> new BigDecimal(doubles[i]));
         Arrays.setAll(bds, i -> BigDecimal.valueOf(doubles[i]));
         System.out.println("--------------------------------------");
         System.out.printf("%-14s %-15s %-8s %s%n", "Value", "Unscaled Value", "Scale", "Precision");
         for (var bd : bds) {
+            System.out.printf("%-15s %-15d %-8d %d %n", bd, bd.unscaledValue(), bd.scale(), bd.precision());
+            bd = bd.setScale(2, RoundingMode.HALF_UP);
             System.out.printf("%-15s %-15d %-8d %d %n", bd, bd.unscaledValue(), bd.scale(), bd.precision());
         }
 
