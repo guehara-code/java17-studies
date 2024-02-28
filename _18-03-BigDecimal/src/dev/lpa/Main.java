@@ -53,5 +53,9 @@ public class Main {
 //        System.out.printf("%-30s %-30d %-8d %d %n", test1, test1.unscaledValue(), test1.scale(), test1.precision());
 //        System.out.printf("%-30s %-30d %-8d %d %n", test2, test2.unscaledValue(), test2.scale(), test2.precision());
 
+        BigDecimal policyPayout = new BigDecimal("100000000.00");
+        System.out.printf("%-15s %-15d %-8d %d %n", policyPayout, policyPayout.unscaledValue(), policyPayout.scale(),
+                policyPayout.precision());
+
     }
 }
