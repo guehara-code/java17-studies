@@ -1,7 +1,9 @@
 package dev.lpa;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.Month;
+import java.time.Period;
 import java.time.temporal.ChronoField;
 import java.time.temporal.ChronoUnit;
 
@@ -61,6 +63,27 @@ public class Main {
         System.out.println(today.isLeapYear());
         System.out.println(May5.minusYears(3).isLeapYear());
 
+        System.out.println("--------------------------");
+        May5.datesUntil(May5.plusDays(7))
+                .forEach(System.out::println);
+
+        System.out.println("--------------------------");
+        May5.datesUntil(May5.plusYears(1), Period.ofDays(7))
+                .forEach(System.out::println);
+
+        LocalTime time = LocalTime.now();
+        System.out.println(time);
+
+        LocalTime sevenAM = LocalTime.of(7, 0);
+        System.out.println(sevenAM);
+
+        LocalTime sevenThirty = LocalTime.of(7, 30, 15);
+        System.out.println(sevenThirty);
+
+        LocalTime sevenPM = LocalTime.parse("19:00");
+        LocalTime sevenThirtyPM = LocalTime.parse("19:30:15.1000");
+        System.out.println(sevenPM.get(ChronoField.AMPM_OF_DAY));
+        System.out.println(sevenThirtyPM.get(ChronoField.AMPM_OF_DAY));
 
     }
 }
