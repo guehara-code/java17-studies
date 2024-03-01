@@ -3,6 +3,8 @@ package dev.lpa;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
+import java.time.temporal.TemporalAdjuster;
+import java.time.temporal.TemporalAdjusters;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -57,5 +59,16 @@ public class Main {
                 ZoneId.of("Australia/Sydney"));
         System.out.println("Your kid's birthdate, Sydney Time = " + dobSydney.format(
                 DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)));
+
+        ZonedDateTime dobHere = dobSydney.withZoneSameInstant(ZoneId.systemDefault());
+        System.out.println("Your kid's birthdate, Here Time = " + dobHere.format(
+                DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)));
+
+        ZonedDateTime firstOfMonth = ZonedDateTime.now()
+                .with(TemporalAdjusters.firstDayOfNextMonth());
+        System.out.printf("First of next Month = %tD %n", firstOfMonth);
+
+        Period timePast = Period.between(LocalDate.EPOCH, dob.toLocalDate());
+        System.out.println(timePast);
     }
 }
