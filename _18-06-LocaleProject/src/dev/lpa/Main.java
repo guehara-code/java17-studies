@@ -28,5 +28,19 @@ public class Main {
             System.out.println(locale.getDisplayName() + "= "
                     + LocalDateTime.now().format(dtf.withLocale(locale)));
         }
+
+        DateTimeFormatter wdayMonth = DateTimeFormatter.ofPattern("EEEE, MMMM d, yyyy");
+        LocalDate may5 = LocalDate.of(2020, 5 , 5);
+
+        System.out.println("------------------------------");
+        for (var locale : List.of(Locale.CANADA, Locale.CANADA_FRENCH,
+                Locale.FRANCE, Locale.GERMANY, Locale.TAIWAN,
+                Locale.JAPAN, Locale.ITALY)) {
+            System.out.println(
+                    locale.getDisplayName() + " : " +
+                    locale.getDisplayName(locale) + "=\n\t" +
+                    may5.format(wdayMonth.withLocale(locale)));
+        }
+
     }
 }
