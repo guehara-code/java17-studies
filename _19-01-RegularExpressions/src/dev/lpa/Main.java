@@ -4,13 +4,29 @@ public class Main {
 
     public static void main(String[] args) {
 
-        String helloworld = "%s %s".formatted("Hello", "World");
-        String helloworld2 = String.format("%s %s", "Hello", "World");
-        System.out.println("Using string's formatted method: " + helloworld);
-        System.out.println("Using String.format: " + helloworld2);
+        String helloWorld = "%s %s".formatted("Hello", "World");
+        String helloWorld2 = String.format("%s %s", "Hello", "World");
+        System.out.println("Using string's formatted method: " + helloWorld);
+        System.out.println("Using String.format: " + helloWorld2);
 
-        String helloworld3 = Main.format("%s %s", "Hello", "World");
-        System.out.println("Using Main.format: " + helloworld3);
+        String helloWorld3 = Main.format("%s %s", "Hello", "World");
+        System.out.println("Using Main.format: " + helloWorld3);
+
+        String testString = "Anyone can learn abc's, 123's, and any regular expression";
+        String replacement = "(-)";
+
+        String[] patterns = {
+                "[a-zA-Z]*$",
+                "^[a-zA-Z]{3}",
+                "[aA]ny\\b"
+        };
+
+        for (String pattern : patterns) {
+            String output = testString.replaceFirst(pattern, replacement);
+            System.out.println("Pattern: " + pattern + " => " + output);
+        }
+
+
 
     }
 
