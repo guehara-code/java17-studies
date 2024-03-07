@@ -28,7 +28,7 @@ public class Review {
 
         String htmlSnippets = """
                 
-                <H1>My Heading</H1>
+                <H1>My Heading</h1>
                 <h2>Sub-heading</h2>
                 <p>This is a paragraph about something.</p>
                 <p style="abc">This is another paragraph about something else.</p>
@@ -38,6 +38,17 @@ public class Review {
                 """;
 
         Pattern htmlPattern =
-                Pattern.compile("<(\\w+)[^>]([^\\v</>]*)(</\\1>)*");
+//                Pattern.compile("<(\\w+)[^>]*>([^\\v</>]*)(</\\1>)*");
+//                Pattern.compile("<([a-zA-Z]+)[^>]*>([^\\v</>]*)(</\\1>)*");
+//                Pattern.compile("<([a-zA-Z_0-9]+)[^>]*>([^\\v</>]*)((?i)</\\1>)*");
+                Pattern.compile("<([a-z_0-9]+)[^>]*>([^\\v</>]*)((?i)</\\1>)*",
+                        Pattern.CASE_INSENSITIVE);
+
+        Matcher m = htmlPattern.matcher(htmlSnippets);
+        m.results()
+                .filter(mr -> mr.group(1).toLowerCase().startsWith("h"))
+                .forEach(mr -> System.out.println("Full Tag: " + mr.group(0)
+                + "\n\tType: " + mr.group(1)
+                + "\n\tText: " + mr.group(2)));
     }
 }
