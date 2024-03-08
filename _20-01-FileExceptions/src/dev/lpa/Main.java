@@ -12,12 +12,8 @@ public class Main {
     public static void main(String[] args) {
 
         String filename = "testing.csv";
-        Path path = Paths.get(filename);
-//        try {
-//            List<String> lines = Files.readAllLines(path);
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
+
+        testFile(filename);
 
         File file = new File(filename);
         if (!file.exists()) {
@@ -25,7 +21,18 @@ public class Main {
             System.out.println("Quitting Application, go figure it out");
         }
         System.out.println("I'm good to go.");
+    }
 
+    private static void testFile(String filename) {
 
+        Path path = Paths.get(filename);
+        try {
+            List<String> lines = Files.readAllLines(path);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } finally {
+            System.out.println("Maybe I'd log something either way...");
+        }
+        System.out.println("File exists and able to use as a resource");
     }
 }
