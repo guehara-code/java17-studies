@@ -82,12 +82,28 @@ public class Main {
         }
 
         try (PrintWriter writer =
-                     new PrintWriter("take4.csv")) {
+                     new PrintWriter("take4.txt")) {
             writer.println(header);
 
             for (Student student : students) {
                 for (var record : student.getEngagementRecords()) {
-                    writer.println(record);
+                    String[] recordData = record.split(",");
+                    writer.printf(String.format("%-12s%-5s%2d%4d%2d%-1s",
+                            student.getStudentId(),
+                            student.getCountry(),
+                            student.getEnrollmentYear(),
+                            student.getEnrollmentMonth(),
+                            student.getEnrollmentAge(),
+                            student.getGender()));
+                    writer.printf("%-1s",
+                            (student.hasExperience() ? 'Y' : 'N'));
+                    writer.format("%-3s%10.2f%-10s%-4s%-30s",
+                            recordData[7], // Course Code
+                            student.getPercentComplete(recordData[7]),
+                            recordData[8], // Engagement Month
+                            recordData[9], // Engagement Year
+                            recordData[10]); // Engagement Type
+                    writer.println();
 
                 }
             }

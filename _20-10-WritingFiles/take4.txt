@@ -1,0 +1,12 @@
+
+Student Id,Country Code,Enrolled Year,Age,Gender,Experienced,Course Code,Engagement Month,Engagement Year,Engagement Type
+1           AU   2015   518FNJMC     73.33FEBRUARY  2024Lecture 11                    
+1           AU   2015   518FNPYC     66.67APRIL     2022Lecture 10                    
+2           IN   2017   437MYJMC     86.67OCTOBER   2017Lecture 13                    
+2           IN   2017   437MYPYC     73.33SEPTEMBER 2019Lecture 11                    
+3           GB   2017   424MNJMC     26.67AUGUST    2018Lecture 4                     
+3           GB   2017   424MNPYC      6.67APRIL     2018Lecture 1                     
+4           CN   2017  1271FNJMC     73.33FEBRUARY  2023Lecture 11                    
+4           CN   2017  1271FNPYC     93.33OCTOBER   2022Lecture 14                    
+5           CN   2022   650MYJMC      6.67FEBRUARY  2022Lecture 1                     
+5           CN   2022   650MYPYC     20.00DECEMBER  2023Lecture 3                     
