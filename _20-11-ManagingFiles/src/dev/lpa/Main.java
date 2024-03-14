@@ -23,11 +23,22 @@ public class Main {
         Path oldPath = Path.of("students.json");
         Path newPath = Path.of("files/student-activity.json");
 
+//        try {
+//            Files.createDirectories(newPath.subpath(0, newPath.getNameCount() - 1));
+////            Files.move(newPath, oldPath);
+//            Files.move(oldPath, newPath);
+//            System.out.println("Path renamed successfully!");
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+
+        Path fileDir = Path.of("files");
+        Path resourceDir = Path.of("resources");
         try {
-            Files.createDirectories(newPath.subpath(0, newPath.getNameCount() - 1));
-//            Files.move(newPath, oldPath);
-            Files.move(oldPath, newPath);
-            System.out.println("Path renamed successfully!");
+//            Files.move(fileDir, resourceDir);
+            Files.copy(fileDir, resourceDir);
+//            System.out.println("Directory renamed");
+            System.out.println("Directory copied to " + resourceDir);
         } catch (IOException e) {
             e.printStackTrace();
         }
