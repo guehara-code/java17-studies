@@ -71,6 +71,32 @@ public class Main {
             throw new RuntimeException(e);
         }
 
+        try (var reader = new InputStreamReader(uri.toURL().openStream());
+             PrintWriter writer = new PrintWriter("USPopulationByState.csv")) {
+            reader.transferTo(new Writer() {
+                @Override
+                public void write(char[] cbuf, int off, int len) throws IOException {
+
+                    String jsonString = new String(cbuf, off, len).trim();
+                    jsonString = jsonString.replace('[', ' ').trim();
+                    jsonString = jsonString.replaceAll("\\]", "");
+                    writer.write(jsonString);
+                }
+
+                @Override
+                public void flush() throws IOException {
+                    writer.flush();
+                }
+
+                @Override
+                public void close() throws IOException {
+                    writer.close();
+                }
+            });
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     public static void recurseCopy(Path source, Path target) throws IOException {
