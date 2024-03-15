@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 
 public class Main {
 
@@ -35,6 +36,7 @@ public class Main {
         Path fileDir = Path.of("files");
         Path resourceDir = Path.of("resources");
         try {
+            recurseDelete(resourceDir);
 //            Files.move(fileDir, resourceDir);
 //            Files.copy(fileDir, resourceDir);
             recurseCopy(fileDir, resourceDir);
@@ -47,7 +49,7 @@ public class Main {
 
     public static void recurseCopy(Path source, Path target) throws IOException {
 
-        Files.copy(source, target);
+        Files.copy(source, target, StandardCopyOption.REPLACE_EXISTING);
         if (Files.isDirectory(source)) {
             try (var children = Files.list(source)) {
                 children.toList().forEach(
@@ -61,5 +63,24 @@ public class Main {
                 );
             }
         }
+    }
+
+    public static void recurseDelete(Path target) throws IOException {
+
+
+        if (Files.isDirectory(target)) {
+            try (var children = Files.list(target)) {
+                children.toList().forEach(
+                        p -> {
+                            try {
+                                Main.recurseDelete(p);
+                            } catch (IOException e) {
+                                throw new RuntimeException();
+                            }
+                        }
+                );
+            }
+        }
+        Files.delete(target);
     }
 }
