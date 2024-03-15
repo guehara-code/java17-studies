@@ -8,4 +8,4 @@ Directory Contents:
 /home/gilberto/Documents/Udemy/java17_masterclass/_20-12-DirectoryFileChallenge/public/assets/indexCopy.txt
 /home/gilberto/Documents/Udemy/java17_masterclass/_20-12-DirectoryFileChallenge/public/index.txt
 /home/gilberto/Documents/Udemy/java17_masterclass/_20-12-DirectoryFileChallenge/public/indexCopy.txt
-Generated: 2024-03-15T17:26:53.825952202
+Generated: 2024-03-15T17:26:53.813542528

@@ -3,6 +3,7 @@ package dev.lpa;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.nio.file.StandardOpenOption;
 import java.time.LocalDateTime;
 import java.util.stream.Collectors;
@@ -16,6 +17,23 @@ public class Main {
 
         try {
             Files.createDirectories(deepestFolder);
+            generateIndexFile(deepestFolder.getName(0));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        for (int i = 1; i <= deepestFolder.getNameCount(); i++) {
+            Path indexPath = deepestFolder.subpath(0, i).resolve("index.txt");
+            Path backupPath = deepestFolder.subpath(0, i).resolve("indexCopy.txt");
+            try {
+                Files.copy(indexPath, backupPath,
+                        StandardCopyOption.REPLACE_EXISTING);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        try {
             generateIndexFile(deepestFolder.getName(0));
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -38,6 +56,19 @@ public class Main {
                     StandardOpenOption.TRUNCATE_EXISTING);
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+
+        try (Stream<Path> contents = Files.list(startingPath)) {
+            contents
+                    .filter(Files::isDirectory)
+                    .toList()
+                    .forEach(dir -> {
+                        try {
+                            generateIndexFile(dir);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    });
         }
     }
 }
