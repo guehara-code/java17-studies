@@ -1,6 +1,8 @@
 package dev.lpa;
 
+import javax.management.relation.RelationNotFoundException;
 import java.io.*;
+import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
@@ -44,14 +46,31 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
+//
+//        try (BufferedReader reader = new BufferedReader(
+//                new FileReader("files//student-activity.json"));
+//             PrintWriter writer = new PrintWriter("student-backup.json")) {
+//            reader.transferTo(writer);
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
 
-        try (BufferedReader reader = new BufferedReader(
-                new FileReader("files//student-activity.json"));
-             PrintWriter writer = new PrintWriter("student-backup.json")) {
+        String urlString = "https://api.census.gov/data/2019/pep/charagegroups?get=NAME,POP&for=state:*";
+        URI uri = URI.create(urlString);
+        try (var urlInputStream = uri.toURL().openStream();) {
+            urlInputStream.transferTo(System.out);
+        } catch (IOException e) {
+            throw new RuntimeException();
+        }
+
+        Path jsonPath = Path.of("USPopulationByState.txt");
+        try (var reader = new InputStreamReader(uri.toURL().openStream());
+        var writer = Files.newBufferedWriter(jsonPath)) {
             reader.transferTo(writer);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
     }
 
     public static void recurseCopy(Path source, Path target) throws IOException {
