@@ -1,0 +1,5 @@
+Directory Contents: 
+/home/gilberto/Documents/Udemy/java17_masterclass/_20-12-DirectoryFileChallenge/public
+/home/gilberto/Documents/Udemy/java17_masterclass/_20-12-DirectoryFileChallenge/public/assets
+/home/gilberto/Documents/Udemy/java17_masterclass/_20-12-DirectoryFileChallenge/public/assets/icons
+Generated: 2024-03-15T17:18:35.293500238
