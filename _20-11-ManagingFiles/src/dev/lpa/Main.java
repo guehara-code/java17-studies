@@ -36,11 +36,30 @@ public class Main {
         Path resourceDir = Path.of("resources");
         try {
 //            Files.move(fileDir, resourceDir);
-            Files.copy(fileDir, resourceDir);
+//            Files.copy(fileDir, resourceDir);
+            recurseCopy(fileDir, resourceDir);
 //            System.out.println("Directory renamed");
             System.out.println("Directory copied to " + resourceDir);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public static void recurseCopy(Path source, Path target) throws IOException {
+
+        Files.copy(source, target);
+        if (Files.isDirectory(source)) {
+            try (var children = Files.list(source)) {
+                children.toList().forEach(
+                        p -> {
+                            try {
+                                Main.recurseCopy(p, target.resolve(p.getFileName()));
+                            } catch (IOException e) {
+                                throw new RuntimeException();
+                            }
+                        }
+                );
+            }
         }
     }
 }
