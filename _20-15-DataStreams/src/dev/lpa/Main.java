@@ -3,6 +3,29 @@ package dev.lpa;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
+
+class Player implements Serializable {
+    private String name;
+    private int topScore;
+    private List<String> collectedWeapons = new ArrayList<>();
+
+    public Player(String name, int topScore, List<String> collectedWeapons) {
+        this.name = name;
+        this.topScore = topScore;
+        this.collectedWeapons = collectedWeapons;
+    }
+
+    @Override
+    public String toString() {
+        return "Player{" +
+                "name='" + name + '\'' +
+                ", topScore=" + topScore +
+                ", collectedWeapons=" + collectedWeapons +
+                '}';
+    }
+}
 
 public class Main {
 
@@ -11,6 +34,15 @@ public class Main {
         Path dataFile = Path.of("data.dat");
         writeData(dataFile);
         readData(dataFile);
+
+        Player tim = new Player("Tim", 100_000_010,
+                List.of("knife", "machete", "pistol"));
+        System.out.println(tim);
+
+        Path timFile = Path.of("tim.dat");
+        writeObject(timFile, tim);
+        Player reconstitutedTim = readObject(timFile);
+        System.out.println(reconstitutedTim);
     }
 
     private static void writeData(Path dataFile) {
@@ -77,6 +109,22 @@ public class Main {
             System.out.println("myString = " + dataStream.readUTF());
 
         } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static void writeObject(Path dataFile, Player player) {
+        try (ObjectOutputStream objStream = new ObjectOutputStream(Files.newOutputStream(dataFile))) {
+            objStream.writeObject(player);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static Player readObject(Path dataFile) {
+        try (ObjectInputStream objStream = new ObjectInputStream(Files.newInputStream(dataFile))) {
+            return (Player) objStream.readObject();
+        } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
