@@ -2,6 +2,8 @@ package dev.lpa;
 
 import org.w3c.dom.ls.LSOutput;
 
+import java.util.concurrent.TimeUnit;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -11,6 +13,22 @@ public class Main {
 
         System.out.println(currentThread);
         printThreadState(currentThread);
+
+        currentThread.setName("MainGuy");
+        currentThread.setPriority(Thread.MAX_PRIORITY);
+        printThreadState(currentThread);
+
+        CustomThread customThread = new CustomThread();
+        customThread.start();
+
+        for (int  i = 1; i <= 3; i++) {
+            System.out.print(" 0 ");
+            try {
+                TimeUnit.SECONDS.sleep(1);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public static void printThreadState(Thread thread) {
