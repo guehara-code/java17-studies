@@ -19,8 +19,10 @@ public class Main {
                 System.out.print(". ");
                 try {
                     Thread.sleep(500);
+                    System.out.println("A. State = " + Thread.currentThread().getState());
                 } catch (InterruptedException e) {
                     System.out.println("\nWhoops!! " + tname + " interrupted.");
+                    System.out.println("A1. State =  " + Thread.currentThread().getState());
                     return;
                 }
             }
@@ -29,6 +31,31 @@ public class Main {
 
         System.out.println(thread.getName() + " starting");
         thread.start();
-        System.out.println("Main thread would continue here");
+
+//        System.out.println("Main thread would continue here");
+//
+//        try {
+//            Thread.sleep(2000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//        thread. interrupt();
+
+        long now = System.currentTimeMillis();
+        while (thread.isAlive()) {
+            System.out.println("\nWaiting for thread to complete");
+            try {
+                Thread.sleep(1000);
+                System.out.println("B. State = " + thread.getState());
+
+                if (System.currentTimeMillis() - now > 2000) {
+                    thread.interrupt();
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        System.out.println("C. State = " + thread.getState());
     }
 }
