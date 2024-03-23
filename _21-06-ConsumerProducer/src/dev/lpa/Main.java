@@ -14,33 +14,47 @@ class MessageRepository {
     private final Lock lock = new ReentrantLock();
 
     public String read() {
-        lock.lock();
-        try {
-            while (!hasMessage) {
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
+        if (lock.tryLock()) {
+            try {
+                while (!hasMessage) {
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
+                hasMessage = false;
+            } finally {
+                lock.unlock();
             }
+        } else {
+            System.out.println("** read blocked");
             hasMessage = false;
-        } finally {
-            lock.unlock();
         }
+
         return message;
     }
 
-    public synchronized void write(String message) {
+    public void write(String message) {
 
-        while (hasMessage) {
+        if (lock.tryLock()) {
             try {
-                wait();
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+                while (hasMessage) {
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                hasMessage = true;
+            } finally {
+                lock.unlock();
             }
+
+        } else {
+            System.out.println("** write blocked");
+            hasMessage = true;
         }
-        hasMessage = true;
-        notifyAll();
         this.message = message;
     }
 
