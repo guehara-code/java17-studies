@@ -42,10 +42,30 @@ class ColorThreadFactory implements ThreadFactory {
 public class Main {
 
     public static void main(String[] args) {
+        var multiExecutor = Executors.newCachedThreadPool();
+        try {
+            multiExecutor.execute(
+                    () -> Main.sum(1, 10, 1, "red"));
+            multiExecutor.execute(
+                    () -> Main.sum(10, 100, 10, "blue"));
+            multiExecutor.execute(
+                    () -> Main.sum(2, 20, 2, "green"));
+            multiExecutor.execute(
+                    () -> Main.sum(1, 10, 1, "yellow"));
+            multiExecutor.execute(
+                    () -> Main.sum(10, 100, 10, "cyan"));
+            multiExecutor.execute(
+                    () -> Main.sum(2, 20, 2, "purple"));
+        } finally {
+            multiExecutor.shutdown();
+        }
+    }
+
+    public static void fixedmain(String[] args) {
 
         int count = 6;
         var multiExecutor = Executors.newFixedThreadPool(
-                count, new ColorThreadFactory()
+                3, new ColorThreadFactory()
         );
 
         for (int i = 0; i < count; i++) {
@@ -144,5 +164,24 @@ public class Main {
             System.out.println(color + " " +
                     threadName.replace("ANSI_", "") + " " + i);
         }
+    }
+
+    private static void sum(int start, int end, int delta, String colorString) {
+
+        var threadColor = ThreadColor.ANSI_RESET;
+        try {
+            threadColor = threadColor.valueOf("ANSI_" +
+                    colorString.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            // User may pass a bad color name, Will just ignore this error.
+        }
+
+        String color = threadColor.color();
+        int sum = 0;
+        for (int i = start; i <= end; i += delta) {
+            sum += i;
+        }
+        System.out.println(color + Thread.currentThread().getName() + ", "
+                + colorString + " " + sum);
     }
 }
