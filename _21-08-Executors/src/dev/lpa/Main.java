@@ -1,6 +1,7 @@
 package dev.lpa;
 
 
+import java.awt.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
@@ -9,17 +10,31 @@ class ColorThreadFactory implements ThreadFactory {
 
     private String threadName;
 
+    private int colorValue = 1;
+
     public ColorThreadFactory(ThreadColor color) {
         this.threadName = color.name();
+    }
+
+    public ColorThreadFactory() {
     }
 
     @Override
     public Thread newThread(Runnable r) {
 
         Thread thread = new Thread(r);
-        thread.setName(threadName);
+        String name = threadName;
+        if (name == null) {
+            name = ThreadColor.values()[colorValue].name();
+        }
+
+        if (++colorValue > (ThreadColor.values().length - 1)) {
+            colorValue = 1;
+        }
+        thread.setName(name);
         return  thread;
     }
+
 }
 
 
@@ -27,6 +42,19 @@ class ColorThreadFactory implements ThreadFactory {
 public class Main {
 
     public static void main(String[] args) {
+
+        int count = 6;
+        var multiExecutor = Executors.newFixedThreadPool(
+                count, new ColorThreadFactory()
+        );
+
+        for (int i = 0; i < count; i++) {
+            multiExecutor.execute(Main::countDown);
+        }
+        multiExecutor.shutdown();
+    }
+
+    public static void singlemain(String[] args) {
 
         var blueExecutor = Executors.newSingleThreadExecutor(
                 new ColorThreadFactory(ThreadColor.ANSI_BLUE)
