@@ -1,10 +1,8 @@
 package dev.lpa;
 
 
-import java.awt.*;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadFactory;
-import java.util.concurrent.TimeUnit;
+import java.util.List;
+import java.util.concurrent.*;
 
 class ColorThreadFactory implements ThreadFactory {
 
@@ -42,6 +40,28 @@ class ColorThreadFactory implements ThreadFactory {
 public class Main {
 
     public static void main(String[] args) {
+        var multiExecutor = Executors.newCachedThreadPool();
+        List<Callable<Integer>> taskList = List.of(
+                () -> Main.sum(1, 10, 1, "red"),
+                () -> Main.sum(10, 100, 10, "blue"),
+                () -> Main.sum(12, 20, 2, "green")
+        );
+        try {
+            var results = multiExecutor.invokeAny(taskList);
+//            for (var result : results) {
+//                System.out.println(result.get(500, TimeUnit.MILLISECONDS));
+//            }
+            System.out.println(results);
+//        } catch (InterruptedException | TimeoutException | ExecutionException e) {
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException(e);
+
+        } finally {
+            multiExecutor.shutdown();
+        }
+    }
+
+    public static void cachedmain(String[] args) {
         var multiExecutor = Executors.newCachedThreadPool();
         try {
 //            multiExecutor.execute(
