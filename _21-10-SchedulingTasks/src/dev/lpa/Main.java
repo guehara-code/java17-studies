@@ -5,10 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 public class Main {
 
@@ -48,6 +45,19 @@ public class Main {
         } finally {
             threadPool.shutdown();
         }
+
+        System.out.println("--->" + ZonedDateTime.now().format(dtf));
+//        ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+        ScheduledExecutorService executor = Executors.newScheduledThreadPool(4);
+
+//        executor.schedule(() -> System.out.println(
+//                ZonedDateTime.now().format(dtf)), 2, TimeUnit.SECONDS);
+        for (int i = 0; i < 4; i++) {
+            executor.schedule(() -> System.out.println(
+                    ZonedDateTime.now().format(dtf)), 2 * (i+1), TimeUnit.SECONDS);
+        }
+
+        executor.shutdown();
 
     }
 }
