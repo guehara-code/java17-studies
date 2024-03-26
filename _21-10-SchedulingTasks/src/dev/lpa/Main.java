@@ -1,5 +1,6 @@
 package dev.lpa;
 
+import java.nio.BufferUnderflowException;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
@@ -46,17 +47,52 @@ public class Main {
             threadPool.shutdown();
         }
 
+        Runnable dateTask = () -> {
+            try {
+                TimeUnit.SECONDS.sleep(3);
+                System.out.println("a " + ZonedDateTime.now().format(dtf));
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        };
+
         System.out.println("--->" + ZonedDateTime.now().format(dtf));
 //        ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
         ScheduledExecutorService executor = Executors.newScheduledThreadPool(4);
 
 //        executor.schedule(() -> System.out.println(
 //                ZonedDateTime.now().format(dtf)), 2, TimeUnit.SECONDS);
-        for (int i = 0; i < 4; i++) {
-            executor.schedule(() -> System.out.println(
-                    ZonedDateTime.now().format(dtf)), 2 * (i+1), TimeUnit.SECONDS);
-        }
+//        for (int i = 0; i < 4; i++) {
+//            executor.schedule(() -> System.out.println(
+//                    ZonedDateTime.now().format(dtf)), 2 * (i+1), TimeUnit.SECONDS);
+//        }
 
+//        var scheduledTask = executor.scheduleWithFixedDelay(() -> System.out.println(
+//                ZonedDateTime.now().format(dtf)), 2, 2, TimeUnit.SECONDS);
+
+//        var scheduledTask = executor.scheduleWithFixedDelay(
+//                dateTask,
+//                2, 2, TimeUnit.SECONDS);
+
+        var scheduledTask = executor.scheduleAtFixedRate(
+                dateTask,
+                2, 2, TimeUnit.SECONDS);
+
+        var scheduledTask2 = executor.scheduleAtFixedRate(
+                () -> System.out.println("b " + ZonedDateTime.now().format(dtf)),
+                2, 2, TimeUnit.SECONDS);
+
+        long time = System.currentTimeMillis();
+        while (!scheduledTask.isDone()) {
+            try {
+                TimeUnit.SECONDS.sleep(2);
+                if ((System.currentTimeMillis() - time) / 1000 > 10) {
+                    scheduledTask.cancel(true);
+                }
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
         executor.shutdown();
 
     }
