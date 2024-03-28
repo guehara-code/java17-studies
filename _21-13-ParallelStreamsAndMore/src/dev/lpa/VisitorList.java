@@ -1,5 +1,11 @@
 package dev.lpa;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -18,15 +24,29 @@ public class VisitorList {
             System.out.println("Adding" + visitor);
             boolean queued = false;
             try {
-                newVisitors.put(visitor);
-                queued = true;
+//                newVisitors.put(visitor);
+//                queued = true;
+                queued = newVisitors.offer(visitor, 5, TimeUnit.SECONDS);
             } catch (InterruptedException e) {
-                System.out.println("Illegal State Exception!");
+                System.out.println("Interrupted Exception!");
             }
             if (queued) {
                 System.out.println(newVisitors);
             } else {
                 System.out.println("Queue is Full, cannot add " + visitor);
+                System.out.println("Draining Queue and writing data to file");
+                List<Person> tempList = new ArrayList<>();
+                newVisitors.drainTo(tempList);
+                List<String> lines = new ArrayList<>();
+                tempList.forEach((customer) -> lines.add(customer.toString()));
+                lines.add(visitor.toString());
+
+                try {
+                    Files.write(Path.of("DrainedQueue.txt"), lines,
+                            StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
         };
 
@@ -36,7 +56,7 @@ public class VisitorList {
 
         while (true) {
             try {
-                if (!producerExecutor.awaitTermination(10, TimeUnit.SECONDS))
+                if (!producerExecutor.awaitTermination(20, TimeUnit.SECONDS))
                     break;
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
