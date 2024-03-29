@@ -4,6 +4,7 @@ package dev.lpa;
 import javax.xml.stream.events.StartDocument;
 import java.util.Arrays;
 import java.util.TreeMap;
+import java.util.concurrent.Executors;
 import java.util.regex.Pattern;
 
 record Participant(String name, String searchingFor, Maze maze, int[] startingPosition) {
@@ -31,7 +32,7 @@ class ParticipantThread extends Thread {
         while (true) {
             int[] newSpot = maze.getNextLocation(lastSpot);
             try {
-                Thread.sleep(500);
+                Thread.sleep(participant.name().equals("Grace") ? 2900 : 500);
                 if (maze.searchCell(participant.searchingFor(),
                         newSpot, lastSpot)) {
                     System.out.printf("%s found %s at %s!%n", participant.name(),
@@ -62,5 +63,24 @@ public class MazeRunner {
                 maze, new int[]{1, 1});
 
         System.out.println(maze);
+
+        var executor = Executors.newCachedThreadPool();
+        var adamsResults = executor.submit(new ParticipantThread(adam));
+        var gracesResults = executor.submit(new ParticipantThread(grace));
+
+        while (!adamsResults.isDone() && !gracesResults.isDone()) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        if (adamsResults.isDone()) {
+            gracesResults.cancel(true);
+        } else if (gracesResults.isDone()) {
+            adamsResults.cancel(true);
+        }
+        executor.shutdown();
+
     }
 }
