@@ -5,6 +5,7 @@ import java.util.Random;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicInteger;
 
 record Student(String name, int enrolledYear, int studentId) implements Comparable<Student> {
 
@@ -23,11 +24,23 @@ class StudentId {
         return id;
     }
 
-    public int getNextId() {
+    public synchronized int getNextId() {
         return id++;
     }
 }
 
+class AtomicStudentId {
+
+    private final AtomicInteger nextId = new AtomicInteger(0);
+
+    private int getId() {
+        return nextId.get();
+    }
+
+    public int getNextId() {
+        return nextId.incrementAndGet();
+    }
+}
 public class Main {
 
     private static Random random = new Random();
@@ -37,7 +50,8 @@ public class Main {
 
     public static void main(String[] args) {
 
-        StudentId idGenerator = new StudentId();
+//        StudentId idGenerator = new StudentId();
+        AtomicStudentId idGenerator = new AtomicStudentId();
         Callable<Student> studentMaker = () -> {
             int studentId = idGenerator.getNextId();
             Student student = new Student("Tim " + studentId,
@@ -47,15 +61,17 @@ public class Main {
         };
 
         var executor = Executors.newCachedThreadPool();
-
-        try {
-            var futures = executor.invokeAll(
-                    Collections.nCopies(10, studentMaker));
-            studentSet.forEach(System.out::println);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+        for (int i = 0; i < 10; i++) {
+            studentSet.clear();
+            try {
+                var futures = executor.invokeAll(
+                        Collections.nCopies(10, studentMaker));
+                System.out.println("# of students = " + studentSet.size());
+//                studentSet.forEach(System.out::println);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
-
         executor.shutdown();
 
     }
