@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
+import java.util.Scanner;
 
 public class Main {
 
@@ -22,8 +23,6 @@ public class Main {
         }
 
 //        String query = "SELECT * FROM music.artists";
-        String albumName = "Tapestry";
-        String query = "SELECT * FROM music.albumview WHERE album_name='%s'".formatted(albumName);
 
         var dataSource = new MariaDbDataSource();
         try {
@@ -31,6 +30,29 @@ public class Main {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+//        Scanner scanner = new Scanner(System.in);
+//        System.out.println("Enter an Album Name: ");
+//        String albumName = scanner.nextLine();
+////        String albumName = "Tapestry";
+//        String query = "SELECT * FROM music.albumview WHERE album_name='%s'".formatted(albumName);
+
+//        Scanner scanner = new Scanner(System.in);
+//        System.out.println("Enter an Artist Id: ");
+//        String artistId = scanner.nextLine();
+//        int artistid = Integer.parseInt(artistId);
+
+//        String query = "SELECT * FROM music.artists WHERE artist_id=%d".formatted(artistid);
+        String query = "SELECT * FROM music.artists limit 10";
+//        String query = """
+//                WITH RankedRows AS (
+//                                        SELECT *,
+//                                        ROW_NUMBER() OVER (ORDER BY artist_id) AS row_num
+//                                        FROM music.artists
+//                                    )
+//                                    SELECT *
+//                                        FROM RankedRows
+//                                        WHERE row_num <= 10""";
 
         try (var connection = dataSource.getConnection(
                 props.getProperty("user"),
@@ -45,9 +67,9 @@ public class Main {
 //            }
 
             var meta = resultSet.getMetaData();
-            for (int i = 1; i <= meta.getColumnCount(); i++) {
-                System.out.printf("%d %s %s%n", i, meta.getColumnName(i), meta.getColumnTypeName(i));
-            }
+//            for (int i = 1; i <= meta.getColumnCount(); i++) {
+//                System.out.printf("%d %s %s%n", i, meta.getColumnName(i), meta.getColumnTypeName(i));
+//            }
             System.out.println("=============================");
 
             for (int i = 1; i <= meta.getColumnCount(); i++) {
