@@ -28,9 +28,10 @@ public class MusicDML {
 
             String tableName = "music.artists";
             String columnName = "artist_name";
-            String columnValue = "Elf";
+            String columnValue = "Bob Dylan";
             if (!executeSelect(statement,tableName, columnName, columnValue)) {
                 System.out.println("Maybe we should add this record");
+                insertRecord(statement, tableName, new String[]{columnName}, new String[]{columnValue});
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -68,5 +69,22 @@ public class MusicDML {
             return printRecords(rs);
         }
         return false;
+    }
+
+    private static boolean insertRecord(Statement statement, String table,
+                                        String[] columnNames, String[] columnValues) throws SQLException {
+
+        String colNames = String.join(",", columnNames);
+        String colValues = String.join("','", columnValues);
+        String query = "INSERT INTO %s (%s) VALUES ('%s')".formatted(table, colNames, colValues);
+        System.out.println(query);
+        boolean insertResult = statement.execute(query);
+//        System.out.println("insertResult = " + insertResult);
+//        return insertResult;
+        int recordsInserted = statement.getUpdateCount();
+        if (recordsInserted > 0) {
+            executeSelect(statement, table, columnNames[0], columnValues[0]);
+        }
+        return recordsInserted > 0;
     }
 }
