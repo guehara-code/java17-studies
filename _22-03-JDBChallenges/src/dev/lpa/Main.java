@@ -36,8 +36,10 @@ public class Main {
                 setUpSchema(conn);
             }
 
-            int newOrder = addOrder(conn, new String[]{"shoes", "shirt", "socks"});
-            System.out.println("New Order = " + newOrder);
+            deleteOrder(conn, 2);
+//            int newOrder = addOrder(conn, new String[]{"shoes", "shirt", "socks"});
+//            System.out.println("New Order = " + newOrder);
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -155,4 +157,31 @@ public class Main {
 
         return orderId;
     }
+
+    private static void deleteOrder(Connection conn, int orderId) throws SQLException {
+
+        String deleteOrder = "DELETE FROM %s WHERE order_id=%d";
+        String parentQuery = deleteOrder.formatted("storefront.order", orderId);
+        String childQuery = deleteOrder.formatted("storefront.order_details", orderId);
+
+        try (Statement statement = conn.createStatement()) {
+            conn.setAutoCommit(false);
+            int deletedRecords = statement.executeUpdate(childQuery);
+            System.out.printf("%d child records deleted%n", deletedRecords);
+            deletedRecords = statement.executeUpdate(parentQuery);
+            if (deletedRecords == 1) {
+                conn.commit();
+                System.out.printf("Order %d was successfully deleted%n", orderId);
+            } else {
+                conn.rollback();
+            }
+        } catch (SQLException e) {
+            conn.rollback();
+            throw new RuntimeException(e);
+        } finally {
+            conn.setAutoCommit(true);
+        }
+
+    }
+
 }
