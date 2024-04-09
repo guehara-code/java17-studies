@@ -17,17 +17,23 @@ public class MainQuery {
              EntityManager em = emf.createEntityManager();) {
             var transaction = em.getTransaction();
             transaction.begin();
-            artists = getArtistJPQL(em, "");
+            artists = getArtistJPQL(em, "%Stev%");
             artists.forEach(System.out::println);
             transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
     }
 
     private static List<Artist> getArtistJPQL(EntityManager em, String matchedValue) {
 
-        String jpql = "SELECT a FROM Artist a";
+//        String jpql = "SELECT a FROM Artist a";
+//        String jpql = "SELECT a FROM Artist a WHERE a.artistName LIKE :partialName";
+        String jpql = "SELECT a FROM Artist a WHERE a.artistName LIKE ?1";
         var query = em.createQuery(jpql, Artist.class);
+//        query.setParameter("partialName", matchedValue);
+        query.setParameter(1, matchedValue);
         return query.getResultList();
     }
 }
