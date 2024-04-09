@@ -4,8 +4,10 @@ import dev.lpa.music.Artist;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
+import jakarta.persistence.Tuple;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 public class MainQuery {
 
@@ -17,11 +19,14 @@ public class MainQuery {
              EntityManager em = emf.createEntityManager();) {
             var transaction = em.getTransaction();
             transaction.begin();
-            artists = getArtistJPQL(em, "%Stev%");
+            artists = getArtistJPQL(em, "%Greatest Hits%");
             artists.forEach(System.out::println);
 
-            var names = getArtistNames(em, "%Stev%");
-            names.forEach(System.out::println);
+//            var names = getArtistNames(em, "%Stev%");
+////            names.forEach(System.out::println);
+//            names.map(a -> new Artist(a.get("id", Integer.class),
+//                    (String) a.get("name")))
+//                            .forEach(System.out::println);
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();
@@ -33,21 +38,25 @@ public class MainQuery {
 
 //        String jpql = "SELECT a FROM Artist a";
 //        String jpql = "SELECT a FROM Artist a WHERE a.artistName LIKE :partialName";
-        String jpql = "SELECT a FROM Artist a WHERE a.artistName LIKE ?1";
+//        String jpql = "SELECT a FROM Artist a WHERE a.artistName LIKE ?1";
+        String jpql = "SELECT a FROM Artist a JOIN albums album WHERE album.albumName LIKE ?1 " +
+                "OR album.albumName LIKE ?2";;
         var query = em.createQuery(jpql, Artist.class);
 //        query.setParameter("partialName", matchedValue);
         query.setParameter(1, matchedValue);
+        query.setParameter(2, "%Best of%");
         return query.getResultList();
     }
 
-    private static List<String> getArtistNames(EntityManager em, String matchedValue) {
+    private static Stream<Tuple> getArtistNames(EntityManager em, String matchedValue) {
 
 //        String jpql = "SELECT a FROM Artist a";
 //        String jpql = "SELECT a FROM Artist a WHERE a.artistName LIKE :partialName";
-        String jpql = "SELECT a.artistName FROM Artist a WHERE a.artistName LIKE ?1";
-        var query = em.createQuery(jpql, String.class);
+        String jpql = "SELECT a.artistId id, a.artistName as name FROM Artist a WHERE a.artistName LIKE ?1 " +
+                "OR album.albumName LIKE ?2";
+        var query = em.createQuery(jpql, Tuple.class);
 //        query.setParameter("partialName", matchedValue);
         query.setParameter(1, matchedValue);
-        return query.getResultList();
+        return query.getResultStream();
     }
 }
