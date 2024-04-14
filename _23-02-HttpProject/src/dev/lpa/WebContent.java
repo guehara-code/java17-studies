@@ -22,6 +22,8 @@ public class WebContent {
                     .entrySet()
                     .forEach(System.out::println);
             System.out.println(urlConnection.getHeaderField("Cache-Control"));
+            urlConnection.connect();
+            printContents(urlConnection.getInputStream());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
