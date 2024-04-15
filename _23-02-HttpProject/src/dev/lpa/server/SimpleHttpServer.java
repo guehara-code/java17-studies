@@ -5,6 +5,7 @@ import com.sun.net.httpserver.HttpServer;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 
+import static java.net.HttpURLConnection.HTTP_OK;
 
 
 public class SimpleHttpServer {
@@ -17,6 +18,18 @@ public class SimpleHttpServer {
             server.createContext("/", exchange -> {
                 String requestMethod = exchange.getRequestMethod();
                 System.out.println("Request Method: " + requestMethod);
+
+                String response = """
+                        <html>
+                            <body>
+                                <h1> Hello World from My Http Server</h1>
+                            </body>
+                        </html>
+                        """;
+                var bytes = response.getBytes();
+                exchange.sendResponseHeaders(HTTP_OK, bytes.length);
+                exchange.getResponseBody().write(bytes);
+                exchange.close();
             });
             server.start();
             System.out.println("Server is listening on port 8080...");
