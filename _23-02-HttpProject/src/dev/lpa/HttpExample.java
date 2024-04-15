@@ -19,6 +19,7 @@ public class HttpExample {
             URL url = new URL("http://localhost:8080");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
+//            connection.setRequestMethod("POST");
             connection.setRequestProperty("User-Agent", "Chrome");
             connection.setRequestProperty("Accept", "application/json, text/html");
             connection.setReadTimeout(30000);
