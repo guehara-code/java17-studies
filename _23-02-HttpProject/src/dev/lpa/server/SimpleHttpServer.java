@@ -29,6 +29,7 @@ public class SimpleHttpServer {
                 Map<String, String> parameters = parseParameters(data);
                 System.out.println(parameters);
 
+                exchange.getRequestHeaders().entrySet().forEach(System.out::println);
                 if (requestMethod.equals("POST")) {
                     visitorCounter++;
                 }
@@ -54,7 +55,7 @@ public class SimpleHttpServer {
                         """.formatted(visitorCounter,
                         firstName == null ? "" : firstName,
                         lastName == null ? "" : lastName);
-                
+
                 var bytes = response.getBytes();
                 exchange.sendResponseHeaders(HTTP_OK, bytes.length);
                 exchange.getResponseBody().write(bytes);
