@@ -1,5 +1,7 @@
 package dev.lpa;
 
+import org.w3c.dom.ls.LSOutput;
+
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -35,7 +37,11 @@ public class ASyncHandlerClient {
             CompletableFuture<HttpResponse<Stream<String>>> responseFuture =
                     client.sendAsync(request, HttpResponse.BodyHandlers.ofLines());
 
-            responseFuture.thenAccept(ASyncHandlerClient::handleResponse);
+            responseFuture.thenApply(ASyncHandlerClient::filterResponse)
+                    .thenApply(ASyncHandlerClient::transformResponse)
+                    .thenAccept(ASyncHandlerClient::printResponse)
+                    .thenRun(() -> {for (int i=0; i < 10; i++) System.out.print(i);})
+                    .thenRun(System.out::println);
 
             System.out.println("Tem Jobs to do besides handling the response.");
             int jobs = 0;
@@ -58,6 +64,30 @@ public class ASyncHandlerClient {
         } else {
             System.out.println("Error reading response " + response.uri());
         }
+    }
+
+    private static Stream<String> filterResponse(HttpResponse<Stream<String>> response) {
+
+        System.out.println("Filtering Response...");
+        if (response.statusCode() == HTTP_OK) {
+            return response.body()
+                    .filter(s -> s.contains("<h1>"));
+
+        } else {
+           return Stream.empty();
+        }
+    }
+
+    private static Stream<String> transformResponse(Stream<String> response) {
+
+        System.out.println("transforming Response ");
+        return response.map(s -> s.replaceAll("<[^>]*>", "").strip());
+    }
+
+    private static void printResponse(Stream<String> response) {
+
+        System.out.println("printing Response ");
+        response.forEach(System.out::println);
     }
 
 }
