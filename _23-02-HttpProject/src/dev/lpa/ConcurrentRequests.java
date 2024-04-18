@@ -1,5 +1,8 @@
 package dev.lpa;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import dev.lpa.handlers.JsonBodyHandler;
 import dev.lpa.handlers.ThreadSafeFileHandler;
 
 import java.io.IOException;
@@ -53,7 +56,8 @@ public class ConcurrentRequests {
         }
 //        sendPostsWithFileResponse(client, urlBase, urlParams,orderMap);
 //        sendPostsSafeFileResponse(client, urlBase, urlParams, orderMap);
-        sendPostsWithFileHandler(client, urlBase, urlParams, orderMap);
+//        sendPostsWithFileHandler(client, urlBase, urlParams, orderMap);
+        sendPostsGetJSON(client, urlBase, urlParams, orderMap);
     }
 
     public static void writeToFile (String content) {
@@ -86,6 +90,35 @@ public class ConcurrentRequests {
         futures.forEach(f -> {
             System.out.println(f.join().body());
         });
+    }
+
+    private static void sendPostsGetJSON(HttpClient client, String baseURI,
+                                                  String paramString, Map<String, Integer> orders) {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        var handler = JsonBodyHandler.create(objectMapper);
+        var futures = orders.entrySet().stream()
+                .map(e -> paramString.formatted(e.getKey(), e.getValue()))
+                .map(s -> HttpRequest.newBuilder(URI.create(baseURI))
+                        .POST(HttpRequest.BodyPublishers.ofString(s)))
+                .map(HttpRequest.Builder::build)
+                .map(request -> client.sendAsync(
+                        request, handler))
+                .toList();
+
+        var allFutureRequests = CompletableFuture.allOf(
+                futures.toArray(new CompletableFuture<?>[0])
+        );
+
+        allFutureRequests.join();
+
+        futures.forEach(f -> {
+            JsonNode node = f.join().body().get("order");
+            System.out.printf("Order Id:%s Expected Delivery: %s %n",
+                    node.get("orderId"),
+                    node.get("orderDeliveryDate").asText());
+        });
+
     }
 
     private static void sendPostsWithFileResponse(HttpClient client, String baseURI,
