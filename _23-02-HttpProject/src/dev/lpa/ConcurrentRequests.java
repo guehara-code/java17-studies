@@ -1,5 +1,7 @@
 package dev.lpa;
 
+import dev.lpa.handlers.ThreadSafeFileHandler;
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -50,7 +52,8 @@ public class ConcurrentRequests {
             }
         }
 //        sendPostsWithFileResponse(client, urlBase, urlParams,orderMap);
-        sendPostsSafeFileResponse(client, urlBase, urlParams, orderMap);
+//        sendPostsSafeFileResponse(client, urlBase, urlParams, orderMap);
+        sendPostsWithFileHandler(client, urlBase, urlParams, orderMap);
     }
 
     public static void writeToFile (String content) {
@@ -96,6 +99,27 @@ public class ConcurrentRequests {
                 .map(request -> client.sendAsync(
                         request, HttpResponse.BodyHandlers.ofFile(orderTracking,
                                 StandardOpenOption.APPEND)))
+                .toList();
+
+        var allFutureRequests = CompletableFuture.allOf(
+                futures.toArray(new CompletableFuture<?>[0])
+        );
+
+        allFutureRequests.join();
+
+    }
+
+    private static void sendPostsWithFileHandler(HttpClient client, String baseURI,
+                                                  String paramString, Map<String, Integer> orders) {
+
+        var handler = new ThreadSafeFileHandler(orderTracking);
+        var futures = orders.entrySet().stream()
+                .map(e -> paramString.formatted(e.getKey(), e.getValue()))
+                .map(s -> HttpRequest.newBuilder(URI.create(baseURI))
+                        .POST(HttpRequest.BodyPublishers.ofString(s)))
+                .map(HttpRequest.Builder::build)
+                .map(request -> client.sendAsync(
+                        request, handler))
                 .toList();
 
         var allFutureRequests = CompletableFuture.allOf(
