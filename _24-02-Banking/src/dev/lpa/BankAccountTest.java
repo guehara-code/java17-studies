@@ -1,10 +1,18 @@
 package dev.lpa;
 
+import java.util.concurrent.ExecutionException;
+
 import static org.junit.Assert.*;
 
 public class BankAccountTest {
 
     private BankAccount account;
+    private static int count;
+
+    @org.junit.BeforeClass
+    public static void beforeClass() {
+        System.out.println("This executes before any test cases. Count = " + count++);
+    }
 
     @org.junit.Before
     public void setup() {
@@ -19,8 +27,15 @@ public class BankAccountTest {
     }
 
     @org.junit.Test
-    public void withdraw() {
-        fail("This test has yet to be implemented");
+    public void withdraw_branch() throws Exception {
+        double balance = account.withdraw(600, true);
+        assertEquals(400.00, balance, 0);
+    }
+
+    @org.junit.Test(expected = IllegalArgumentException.class)
+    public void withdraw_notBranch() throws Exception {
+        double balance = account.withdraw(600, false);
+        assertEquals(400.00, balance, 0);
     }
 
     @org.junit.Test
@@ -38,6 +53,16 @@ public class BankAccountTest {
     @org.junit.Test
     public void isChecking_true() {
         assertTrue("The account is NOT a checking account", account.isChecking());
+    }
+
+    @org.junit.AfterClass
+    public static void afterClass() {
+        System.out.println("This executes after any test cases. Count = " + count++);
+    }
+
+    @org.junit.After
+    public void teardown() {
+        System.out.println("Count = " + count++);
     }
 
 }
