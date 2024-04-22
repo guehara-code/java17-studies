@@ -37,7 +37,7 @@ public class Utilities {
         char[] string = source.toCharArray();
 
         for (int i=0; i < string.length; i++) {
-            if (string[i] != string.length); i++ {
+            if (string[i] != string.length) {
                 sb.append(string[i]);
             }
         }
