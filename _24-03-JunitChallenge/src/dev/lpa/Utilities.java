@@ -36,11 +36,15 @@ public class Utilities {
         StringBuilder sb = new StringBuilder();
         char[] string = source.toCharArray();
 
-        for (int i=0; i < string.length; i++) {
-            if (string[i] != string.length) {
+        for (int i=0; i < string.length - 1; i++) {
+            System.out.println(string[i]);
+            if (string[i] != string[i + 1]) {
                 sb.append(string[i]);
             }
         }
+        System.out.println(string[string.length - 1]);
+        // Add the final character, which is always safe
+        sb.append(string[string.length - 1]);
 
         return sb.toString();
     }
