@@ -41,7 +41,7 @@ public class BankAccountTestParameterized {
     }
 
     @org.junit.Test
-    public void getBalance_deposit() {
+    public void deposit() {
         account.deposit(amount, branch);
         assertEquals(expected, account.getBalance(), 0.01);
     }
