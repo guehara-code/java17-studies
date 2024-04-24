@@ -11,6 +11,13 @@ public class Main {
         BaseballTeam phillies = new BaseballTeam("Philadelphia Philies");
         BaseballTeam astros = new BaseballTeam("Houston Astros");
         scoreResult(phillies, 3, astros, 5);
+
+        var harper = new BaseballPlayer("B Harper", "Right Fielder");
+        var marsh = new BaseballPlayer("B Marsh", "Right Fielder");
+        phillies.addTeamMember(harper);
+        phillies.addTeamMember(marsh);
+        phillies.listTeamMembers();
+
     }
 
     public static void scoreResult(BaseballTeam team1, int t1_score,
